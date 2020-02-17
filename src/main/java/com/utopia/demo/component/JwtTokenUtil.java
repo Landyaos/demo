@@ -1,4 +1,4 @@
-package com.utopia.demo.common;
+package com.utopia.demo.component;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;

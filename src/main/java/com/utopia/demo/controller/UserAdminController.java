@@ -5,7 +5,11 @@ import com.utopia.demo.common.CommonResult;
 import com.utopia.demo.entity.User;
 import com.utopia.demo.service.UserAdminService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.hibernate.loader.plan.build.internal.LoadGraphLoadPlanBuildingStrategy;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -13,34 +17,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 用户管理
- * 业务：{
- * 1、login/register
- * 2、
- * }
- */
-@Api(tags = "UserAdminController")
+
+@Api(value = "UserAdminController")
 @RestController
 public class UserAdminController {
 
     @Autowired
     private UserAdminService userAdminService;
+
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
+
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 
 
-    @GetMapping(value = "/auth")
-    @ResponseBody
-    public String auth() {
-        return "Hello auth";
+    @GetMapping("/auth")
+    public void auth() {
+        System.out.println("auth test");
     }
 
-    @ApiOperation("Register")
+
+    @ApiOperation(value = "Register", httpMethod = "POST", response = CommonResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "mail", value = "邮箱", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "phone", value = "电话", dataTypeClass = String.class, required = true)
+    })
     @PostMapping(value = "/register")
-    @ResponseBody
     public CommonResult<User> register(@RequestParam("username") String username,
                                        @RequestParam("password") String password,
                                        @RequestParam("mail") String mail,
@@ -52,12 +57,14 @@ public class UserAdminController {
             return CommonResult.failed();
         }
         return CommonResult.success(user_new);
-
     }
 
-    @ApiOperation("Login")
+    @ApiOperation(value = "Login", httpMethod = "POST", response = CommonResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class, required = true)
+    })
     @PostMapping(value = "/login")
-    @ResponseBody
     public CommonResult login(
             @RequestParam("username") String username,
             @RequestParam("password") String password
@@ -70,5 +77,39 @@ public class UserAdminController {
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
         return CommonResult.success(tokenMap);
+    }
+
+    @ApiOperation(value = "用户注销", httpMethod = "POST", response = CommonResult.class)
+    @ApiImplicitParam(name = "id", value = "用户id", dataTypeClass = Long.class, required = true)
+    @PostMapping("/logout")
+    public CommonResult logout(@RequestParam("id") Long id) {
+        return null;
+    }
+
+
+    @ApiOperation(value = "获取用户信息", httpMethod = "GET", response = CommonResult.class)
+    @ApiImplicitParam(name = "id", value = "用户id", dataTypeClass = Long.class, required = true)
+    @GetMapping(value = "/user")
+    public CommonResult getUserDetail(@RequestParam("id") Long id) {
+        return null;
+    }
+
+    @ApiOperation(value = "修改用户信息", httpMethod = "PUT", response = CommonResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户id", dataTypeClass = Long.class, required = true),
+            @ApiImplicitParam(name = "username", value = "用户名", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "mail", value = "邮箱", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "phone", value = "电话", dataTypeClass = String.class, required = true)
+    })
+    @PutMapping(value = "/user")
+    public CommonResult putUserDetail(
+            @RequestParam("id") Long id,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam("mail") String mail,
+            @RequestParam("phone") String phone
+    ) {
+        return null;
     }
 }

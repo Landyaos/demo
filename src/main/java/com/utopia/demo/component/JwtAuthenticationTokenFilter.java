@@ -1,6 +1,5 @@
 package com.utopia.demo.component;
 
-import com.utopia.demo.common.JwtTokenUtil;
 import com.utopia.demo.service.UserAdminService;
 import com.utopia.demo.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;

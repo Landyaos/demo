@@ -1,13 +1,12 @@
 package com.utopia.demo.config;
 
-import com.utopia.demo.common.JwtTokenUtil;
+import com.utopia.demo.component.JwtTokenUtil;
 import com.utopia.demo.component.JwtAuthenticationTokenFilter;
 import com.utopia.demo.component.RestAuthenticationEntryPoint;
 import com.utopia.demo.component.RestfulAccessDeniedHandler;
 import com.utopia.demo.service.UserAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +14,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,11 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/",
                         "/*.html",
                         "/favicon.ico",
+                        "/**/*.html",
                         "/**/*.css",
                         "/**/*.js",
                         "/druid/**",
                         "/swagger-resources/**",
-                        "/webjars/springfox-swagger-ui/**"
+                        "/v2/api-docs/**",
+                        "/webjars/**"
                 ).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/login", "/register").permitAll()

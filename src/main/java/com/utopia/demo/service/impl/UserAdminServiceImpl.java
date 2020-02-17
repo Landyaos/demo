@@ -1,6 +1,6 @@
 package com.utopia.demo.service.impl;
 
-import com.utopia.demo.common.JwtTokenUtil;
+import com.utopia.demo.component.JwtTokenUtil;
 import com.utopia.demo.entity.User;
 import com.utopia.demo.repository.UserRepository;
 import com.utopia.demo.service.UserAdminService;
