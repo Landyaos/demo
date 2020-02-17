@@ -3,27 +3,29 @@ package com.utopia.demo.controller;
 
 import com.utopia.demo.common.CommonResult;
 import com.utopia.demo.entity.User;
-import com.utopia.demo.service.UserAdminService;
+import com.utopia.demo.service.CaptchaService;
+import com.utopia.demo.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.hibernate.loader.plan.build.internal.LoadGraphLoadPlanBuildingStrategy;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.HashMap;
 import java.util.Map;
 
 
-@Api(value = "UserAdminController")
+@Api(value = "用户管理控制器")
 @RestController
 public class UserAdminController {
 
     @Autowired
-    private UserAdminService userAdminService;
+    private UserService userService;
+    @Autowired
+    private CaptchaService captchaService;
 
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
@@ -38,7 +40,7 @@ public class UserAdminController {
     }
 
 
-    @ApiOperation(value = "Register", httpMethod = "POST", response = CommonResult.class)
+    @ApiOperation(value = "用户注册", httpMethod = "POST", response = CommonResult.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "用户名", dataTypeClass = String.class, required = true),
             @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class, required = true),
@@ -51,7 +53,7 @@ public class UserAdminController {
                                        @RequestParam("mail") String mail,
                                        @RequestParam("phone") String phone) {
 
-        User user_new = userAdminService.register(new User(username, password, mail, phone));
+        User user_new = userService.register(new User(username, password, mail, phone));
 
         if (user_new == null) {
             return CommonResult.failed();
@@ -59,17 +61,22 @@ public class UserAdminController {
         return CommonResult.success(user_new);
     }
 
-    @ApiOperation(value = "Login", httpMethod = "POST", response = CommonResult.class)
+    @ApiOperation(value = "用户登录", httpMethod = "POST", response = CommonResult.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "用户名", dataTypeClass = String.class, required = true),
-            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class, required = true)
+            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "captcha", value = "验证码", dataTypeClass = String.class, required = true)
     })
     @PostMapping(value = "/login")
     public CommonResult login(
             @RequestParam("username") String username,
-            @RequestParam("password") String password
+            @RequestParam("password") String password,
+            @RequestParam("captcha") String captcha
     ) {
-        String token = userAdminService.login(username, password);
+        if (!captchaService.verifyCaptcha(username, captcha)) {
+            return CommonResult.failed("验证码错误");
+        }
+        String token = userService.login(username, password);
         if (token == null) {
             return CommonResult.validateFailed("username or password is wrong");
         }
@@ -86,11 +93,19 @@ public class UserAdminController {
         return null;
     }
 
+    @ApiOperation(value = "获取验证码", httpMethod = "GET", response = CommonResult.class)
+    @ApiImplicitParam(name = "username",value = "用户名", dataTypeClass = String.class, required = true)
+    @GetMapping("/captcha")
+    public CommonResult getCaptcha(@RequestParam(value = "username") String username) {
+        String captcha = captchaService.generateCaptcha(username);
+        return CommonResult.success(captcha,"获取验证码成功");
+    }
 
     @ApiOperation(value = "获取用户信息", httpMethod = "GET", response = CommonResult.class)
     @ApiImplicitParam(name = "id", value = "用户id", dataTypeClass = Long.class, required = true)
     @GetMapping(value = "/user")
     public CommonResult getUserDetail(@RequestParam("id") Long id) {
+
         return null;
     }
 

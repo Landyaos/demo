@@ -71,10 +71,5 @@ swagger2:
   scanBasePackage: com.utopia.demo.controller
 
 # redis -> key:value
-redis:
-  key:
-    prefix:
-      authCode: "portal:authCode:"
-    expire:
-      authCode: 120
+
 

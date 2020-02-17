@@ -3,7 +3,7 @@ package com.utopia.demo.service.impl;
 import com.utopia.demo.component.JwtTokenUtil;
 import com.utopia.demo.entity.User;
 import com.utopia.demo.repository.UserRepository;
-import com.utopia.demo.service.UserAdminService;
+import com.utopia.demo.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserAdminServiceImpl implements UserAdminService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;

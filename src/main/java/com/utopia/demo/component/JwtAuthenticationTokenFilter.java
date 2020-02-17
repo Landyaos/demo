@@ -1,6 +1,6 @@
 package com.utopia.demo.component;
 
-import com.utopia.demo.service.UserAdminService;
+import com.utopia.demo.service.UserService;
 import com.utopia.demo.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ import java.io.IOException;
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserAdminService userAdminService;
+    private UserService userService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
@@ -41,7 +41,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
             if (username != null
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetailsImpl userDetailsImpl = this.userAdminService.loadUserByUsername(username);
+                UserDetailsImpl userDetailsImpl = this.userService.loadUserByUsername(username);
 
                 if (jwtTokenUtil.validateToken(authToken, userDetailsImpl)) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetailsImpl, null, userDetailsImpl.getAuthorities());

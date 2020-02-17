@@ -4,7 +4,7 @@ import com.utopia.demo.component.JwtTokenUtil;
 import com.utopia.demo.component.JwtAuthenticationTokenFilter;
 import com.utopia.demo.component.RestAuthenticationEntryPoint;
 import com.utopia.demo.component.RestfulAccessDeniedHandler;
-import com.utopia.demo.service.UserAdminService;
+import com.utopia.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserAdminService userAdminService;
+    private UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         HttpMethod.GET,
                         "/",
+                        "/captcha",
                         "/*.html",
                         "/favicon.ico",
                         "/**/*.html",
@@ -116,7 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
 
-        return username -> userAdminService.loadUserByUsername(username);
+        return username -> userService.loadUserByUsername(username);
 
     }
 

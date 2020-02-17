@@ -6,7 +6,7 @@ import com.utopia.demo.service.impl.UserDetailsImpl;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface UserAdminService {
+public interface UserService {
 
     User getUserByUsername(String username);
 
