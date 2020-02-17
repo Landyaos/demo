@@ -1,10 +1,10 @@
-package com.utopia.demo.model;
+package com.utopia.demo.entity;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
-public class Role {
+@Table(name = "genre")
+public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,15 +14,37 @@ public class Role {
     private String name;
 
     @Column
+    private String foreign_name;
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", foreign_name='" + foreign_name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    public String getForeign_name() {
+        return foreign_name;
+    }
+
+    public void setForeign_name(String foreign_name) {
+        this.foreign_name = foreign_name;
+    }
+
+    @Column
     private String description;
 
-    public Role(String name, String description) {
+    public Genre() {
+    }
+
+    public Genre(String name, String description) {
 
         this.name = name;
         this.description = description;
-
     }
-
 
     public Long getId() {
         return id;

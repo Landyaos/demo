@@ -1,7 +1,5 @@
-package com.utopia.demo.model;
+package com.utopia.demo.entity;
 
-
-import lombok.extern.apachecommons.CommonsLog;
 
 import javax.persistence.*;
 

@@ -1,7 +1,6 @@
-package com.utopia.demo.model;
+package com.utopia.demo.entity;
 
 import javax.persistence.*;
-import java.awt.*;
 
 @Entity
 @Table(name = "comment")

@@ -1,9 +1,6 @@
-package com.utopia.demo.model;
-
-import com.alibaba.druid.pool.ha.selector.StickyRandomDataSourceSelector;
+package com.utopia.demo.entity;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 
 @Entity

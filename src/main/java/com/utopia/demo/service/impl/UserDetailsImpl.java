@@ -1,11 +1,10 @@
-package com.utopia.demo.service;
+package com.utopia.demo.service.impl;
 
-import com.utopia.demo.model.Permission;
-import com.utopia.demo.model.User;
+import com.utopia.demo.entity.Permission;
+import com.utopia.demo.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collection;

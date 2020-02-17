@@ -2,7 +2,7 @@ package com.utopia.demo.controller;
 
 
 import com.utopia.demo.common.CommonResult;
-import com.utopia.demo.model.User;
+import com.utopia.demo.entity.User;
 import com.utopia.demo.service.UserAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

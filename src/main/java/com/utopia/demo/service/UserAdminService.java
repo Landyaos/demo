@@ -1,8 +1,7 @@
 package com.utopia.demo.service;
 
-import com.utopia.demo.dto.UserParam;
-import com.utopia.demo.model.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.utopia.demo.entity.User;
+import com.utopia.demo.service.impl.UserDetailsImpl;
 
 import javax.transaction.Transactional;
 import java.util.List;

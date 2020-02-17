@@ -1,6 +1,4 @@
-package com.utopia.demo.model;
-
-import cn.hutool.bloomfilter.filter.SDBMFilter;
+package com.utopia.demo.entity;
 
 import javax.persistence.*;
 import java.util.Date;

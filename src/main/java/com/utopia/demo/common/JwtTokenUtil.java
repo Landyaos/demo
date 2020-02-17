@@ -2,7 +2,7 @@ package com.utopia.demo.common;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.utopia.demo.service.UserDetailsImpl;
+import com.utopia.demo.service.impl.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

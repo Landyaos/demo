@@ -1,6 +1,4 @@
-package com.utopia.demo.model;
-
-import org.springframework.web.bind.annotation.GetMapping;
+package com.utopia.demo.entity;
 
 import javax.persistence.*;
 

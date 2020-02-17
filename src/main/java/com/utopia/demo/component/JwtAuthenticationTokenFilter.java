@@ -2,7 +2,7 @@ package com.utopia.demo.component;
 
 import com.utopia.demo.common.JwtTokenUtil;
 import com.utopia.demo.service.UserAdminService;
-import com.utopia.demo.service.UserDetailsImpl;
+import com.utopia.demo.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

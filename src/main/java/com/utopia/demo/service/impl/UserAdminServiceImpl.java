@@ -1,9 +1,9 @@
-package com.utopia.demo.service;
+package com.utopia.demo.service.impl;
 
 import com.utopia.demo.common.JwtTokenUtil;
-import com.utopia.demo.model.Permission;
-import com.utopia.demo.model.User;
+import com.utopia.demo.entity.User;
 import com.utopia.demo.repository.UserRepository;
+import com.utopia.demo.service.UserAdminService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
