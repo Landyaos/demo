@@ -34,23 +34,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(
-                        HttpMethod.GET,
-                        "/",
-                        "/captcha",
-                        "/*.html",
-                        "/favicon.ico",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js",
-                        "/druid/**",
-                        "/swagger-resources/**",
-                        "/v2/api-docs/**",
-                        "/webjars/**"
-                ).permitAll()
+                // 测试
+                .antMatchers(HttpMethod.GET,"/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/**").permitAll()
+//
+//                .antMatchers(
+//                        HttpMethod.GET,
+//                        "/**",
+//                        "/auth",
+//                        "/captcha",
+//                        "/*.html",
+//                        "/favicon.ico",
+//                        "/**/*.html",
+//                        "/**/*.css",
+//                        "/**/*.js",
+//                        "/druid/**",
+//                        "/swagger-resources/**",
+//                        "/v2/api-docs/**",
+//                        "/webjars/**"
+//                ).permitAll()
+
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/login", "/register").permitAll()
                 .anyRequest().authenticated();
+
         http.headers().cacheControl();
         http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling()

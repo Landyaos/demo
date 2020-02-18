@@ -1,5 +1,6 @@
 package com.utopia.demo.service;
 
+import com.utopia.demo.dto.UserParam;
 import com.utopia.demo.entity.User;
 import com.utopia.demo.service.impl.UserDetailsImpl;
 
@@ -10,23 +11,21 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
-    User getUserById(int id);
+    User getUserById(long id);
 
     @Transactional
     List<User> userListByUsername(String username, int pageSize, int pageNum);
 
-    int updateUser(int id, User user);
+    User updateUser(UserParam userParam);
 
-    int deleteUser(int id);
+    int deleteUser(long id);
 
 
-
-    User register(User user);
+    User register(UserParam user);
 
     String login(String username, String password);
 
     String refreshToken(String token);
-
 
     UserDetailsImpl loadUserByUsername(String username);
 }

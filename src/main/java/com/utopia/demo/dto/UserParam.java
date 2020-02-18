@@ -2,10 +2,30 @@ package com.utopia.demo.dto;
 
 public class UserParam {
 
+    private Long id;
     private String username;
     private String password;
     private String mail;
     private String phone;
+
+    @Override
+    public String toString() {
+        return "UserParam{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", mail='" + mail + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;

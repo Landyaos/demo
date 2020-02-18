@@ -29,7 +29,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public Boolean verifyCaptcha(String username, String captcha) {
 
-        if (StringUtils.isEmpty(captcha)) {
+        if (StringUtils.isEmpty(captcha) || redisService.get("captcha" + username) == null) {
             return false;
         }
         return redisService.get("captcha" + username).equals(captcha);

@@ -1,6 +1,7 @@
 package com.utopia.demo.service.impl;
 
 import com.utopia.demo.component.JwtTokenUtil;
+import com.utopia.demo.dto.UserParam;
 import com.utopia.demo.entity.User;
 import com.utopia.demo.repository.UserRepository;
 import com.utopia.demo.service.UserService;
@@ -35,8 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
-        return null;
+    public User getUserById(long id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -45,21 +46,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateUser(int id, User user) {
+    public User updateUser(UserParam userParam) {
+        if (userRepository.findExistUserUpdate(userParam.getId(), userParam.getUsername()) == null) {
+            User user = new User();
+            BeanUtils.copyProperties(userParam, user);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public int deleteUser(long id) {
         return 0;
     }
 
     @Override
-    public int deleteUser(int id) {
-        return 0;
-    }
-
-    @Override
-    public User register(User user) {
-
+    public User register(UserParam user) {
+        //查询同名用户
+        System.out.println(userRepository.findByUsername(user.getUsername()));
+        if (userRepository.findByUsername(user.getUsername()) != null) {
+            return null;
+        }
         User user_new = new User();
         BeanUtils.copyProperties(user, user_new);
-        //查询同名用户  略
+
 
         user_new.setPassword(passwordEncoder.encode(user_new.getPassword()));
         userRepository.save(user_new);
