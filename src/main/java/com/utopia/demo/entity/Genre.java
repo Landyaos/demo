@@ -1,14 +1,15 @@
 package com.utopia.demo.entity;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.annotations.ApiModel;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@ApiModel(value = "Table_类型")
 @Entity
 @Table(name = "genre")
-public class Genre {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Genre extends AbstractEntity {
 
     @Column(nullable = false)
     private String name;
@@ -16,42 +17,48 @@ public class Genre {
     @Column
     private String foreign_name;
 
+    @Column
+    private String description;
+
+    /**
+     * @ManyToMany(targetEntity = Parent.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+     * @JoinTable(joinColumns = {@JoinColumn(name = "child_id")},
+     * inverseJoinColumns = {@JoinColumn(name = "parent_id")})
+     * private Set<Parent> parentSet;
+     */
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "movie_genre_relation",
+            joinColumns = {@JoinColumn(name = "genre_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
+    private Set<Movie> movieSet;
+
+
+    public Genre() {
+    }
+
+    public Genre(String name, String foreign_name, String description) {
+        this.name = name;
+        this.foreign_name = foreign_name;
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Genre{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", foreign_name='" + foreign_name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
 
-    public String getForeign_name() {
-        return foreign_name;
+    public Set<Movie> getMovieSet() {
+        return movieSet;
     }
 
-    public void setForeign_name(String foreign_name) {
-        this.foreign_name = foreign_name;
-    }
-
-    @Column
-    private String description;
-
-    public Genre() {
-    }
-
-    public Genre(String name, String description) {
-
-        this.name = name;
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    @JsonBackReference
+    public void setMovieSet(Set<Movie> movieSet) {
+        this.movieSet = movieSet;
     }
 
     public String getName() {
@@ -60,6 +67,14 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getForeign_name() {
+        return foreign_name;
+    }
+
+    public void setForeign_name(String foreign_name) {
+        this.foreign_name = foreign_name;
     }
 
     public String getDescription() {

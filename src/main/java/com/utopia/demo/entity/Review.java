@@ -1,20 +1,18 @@
 package com.utopia.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review extends AbstractEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Movie movie;
 
     @Column
@@ -23,36 +21,28 @@ public class Review {
     @Column
     private Float rate;
 
-    @Column
-    private String content;
-
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column
     private Date date;
 
     @Column
     private Long votes;
 
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "text")
+    private String content;
+
     @Override
     public String toString() {
         return "Review{" +
-                "id=" + id +
-                ", user=" + user +
+                "user=" + user +
                 ", movie=" + movie +
                 ", title='" + title + '\'' +
                 ", rate=" + rate +
-                ", content='" + content + '\'' +
                 ", date=" + date +
                 ", votes=" + votes +
+                ", content='" + content + '\'' +
                 '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getUser() {
@@ -87,14 +77,6 @@ public class Review {
         this.rate = rate;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -111,6 +93,11 @@ public class Review {
         this.votes = votes;
     }
 
-    public Review() {
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

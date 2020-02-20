@@ -4,11 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends AbstractEntity{
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -25,8 +21,12 @@ public class User {
     @Column
     private String icon;
 
+    @OneToOne
+    private Role role;
+
 
     public User() {
+
     }
 
     public User(String username, String password, String phone, String mail) {
@@ -39,21 +39,13 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", mail='" + mail + '\'' +
                 ", icon='" + icon + '\'' +
+                ", role=" + role +
                 '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -94,5 +86,13 @@ public class User {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

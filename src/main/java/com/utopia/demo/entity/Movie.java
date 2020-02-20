@@ -1,67 +1,97 @@
 package com.utopia.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
+@ApiModel(value = "Table_电影")
 @Entity
 @Table(name = "movie")
-public class Movie {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Movie extends AbstractEntity {
 
     @Column(nullable = false)
     private String name;
+
     @Column
     private String foreign_name;
 
     @Column
-    private String area;
+    private Integer length;
+
     @Column
     private String language;
+
     @Column
-    private String cover;
-    @Column
-    private Long length;
-    @Temporal(TemporalType.DATE)
+    private String area;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column
     private Date release_date;
 
     @Column
-    private String url_douban;
-    @Column
-    private Float rate_douban;
-    @Column
-    private Long votes_douban;
+    private Float box_office;
 
     @Column
-    private String url_imdb;
+    private String cover_url;
+
+    @Column
+    private Float rate;
+
+    @Column
+    private Long votes;
+
+    @Column
+    private String rate_weight;
+
+    @Column
+    private String douban_link;
+
+    @Column
+    private String imdb_link;
+
+    @Column
+    private String rottenTomatoes_link;
+
+    @ManyToMany
+    private Set<Genre> genreSet;
+
+    @ManyToMany
+    private Set<DirectorScreenwriter> directorSet;
+
+    @ManyToMany
+    private Set<DirectorScreenwriter> screenwriterSet;
+
+    @ManyToMany
+    private Set<Starring> starringSet;
+
+    public Movie() {
+    }
 
     @Override
     public String toString() {
         return "Movie{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", foreign_name='" + foreign_name + '\'' +
-                ", area='" + area + '\'' +
-                ", language='" + language + '\'' +
-                ", cover='" + cover + '\'' +
                 ", length=" + length +
+                ", language='" + language + '\'' +
+                ", area='" + area + '\'' +
                 ", release_date=" + release_date +
-                ", url_douban='" + url_douban + '\'' +
-                ", rate_douban=" + rate_douban +
-                ", votes_douban=" + votes_douban +
-                ", url_imdb='" + url_imdb + '\'' +
+                ", box_office=" + box_office +
+                ", cover_url='" + cover_url + '\'' +
+                ", rate=" + rate +
+                ", votes=" + votes +
+                ", rate_weight='" + rate_weight + '\'' +
+                ", douban_link='" + douban_link + '\'' +
+                ", imdb_link='" + imdb_link + '\'' +
+                ", rottenTomatoes_link='" + rottenTomatoes_link + '\'' +
+                ", genreSet=" + genreSet +
+                ", directorSet=" + directorSet +
+                ", screenwriterSet=" + screenwriterSet +
+                ", starringSet=" + starringSet +
                 '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -80,12 +110,12 @@ public class Movie {
         this.foreign_name = foreign_name;
     }
 
-    public String getArea() {
-        return area;
+    public Integer getLength() {
+        return length;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     public String getLanguage() {
@@ -96,20 +126,12 @@ public class Movie {
         this.language = language;
     }
 
-    public String getCover() {
-        return cover;
+    public String getArea() {
+        return area;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public Long getLength() {
-        return length;
-    }
-
-    public void setLength(Long length) {
-        this.length = length;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public Date getRelease_date() {
@@ -120,35 +142,99 @@ public class Movie {
         this.release_date = release_date;
     }
 
-    public String getUrl_douban() {
-        return url_douban;
+    public Float getBox_office() {
+        return box_office;
     }
 
-    public void setUrl_douban(String url_douban) {
-        this.url_douban = url_douban;
+    public void setBox_office(Float box_office) {
+        this.box_office = box_office;
     }
 
-    public Float getRate_douban() {
-        return rate_douban;
+    public String getCover_url() {
+        return cover_url;
     }
 
-    public void setRate_douban(Float rate_douban) {
-        this.rate_douban = rate_douban;
+    public void setCover_url(String cover_url) {
+        this.cover_url = cover_url;
     }
 
-    public Long getVotes_douban() {
-        return votes_douban;
+    public Float getRate() {
+        return rate;
     }
 
-    public void setVotes_douban(Long votes_douban) {
-        this.votes_douban = votes_douban;
+    public void setRate(Float rate) {
+        this.rate = rate;
     }
 
-    public String getUrl_imdb() {
-        return url_imdb;
+    public Long getVotes() {
+        return votes;
     }
 
-    public void setUrl_imdb(String url_imdb) {
-        this.url_imdb = url_imdb;
+    public void setVotes(Long votes) {
+        this.votes = votes;
+    }
+
+    public String getRate_weight() {
+        return rate_weight;
+    }
+
+    public void setRate_weight(String rate_weight) {
+        this.rate_weight = rate_weight;
+    }
+
+    public String getDouban_link() {
+        return douban_link;
+    }
+
+    public void setDouban_link(String douban_link) {
+        this.douban_link = douban_link;
+    }
+
+    public String getImdb_link() {
+        return imdb_link;
+    }
+
+    public void setImdb_link(String imdb_link) {
+        this.imdb_link = imdb_link;
+    }
+
+    public String getRottenTomatoes_link() {
+        return rottenTomatoes_link;
+    }
+
+    public void setRottenTomatoes_link(String rottenTomatoes_link) {
+        this.rottenTomatoes_link = rottenTomatoes_link;
+    }
+
+    public Set<Genre> getGenreSet() {
+        return genreSet;
+    }
+
+    public void setGenreSet(Set<Genre> genreSet) {
+        this.genreSet = genreSet;
+    }
+
+    public Set<DirectorScreenwriter> getDirectorSet() {
+        return directorSet;
+    }
+
+    public void setDirectorSet(Set<DirectorScreenwriter> directorSet) {
+        this.directorSet = directorSet;
+    }
+
+    public Set<DirectorScreenwriter> getScreenwriterSet() {
+        return screenwriterSet;
+    }
+
+    public void setScreenwriterSet(Set<DirectorScreenwriter> screenwriterSet) {
+        this.screenwriterSet = screenwriterSet;
+    }
+
+    public Set<Starring> getStarringSet() {
+        return starringSet;
+    }
+
+    public void setStarringSet(Set<Starring> starringSet) {
+        this.starringSet = starringSet;
     }
 }

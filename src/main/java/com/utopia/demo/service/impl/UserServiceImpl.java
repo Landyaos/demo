@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
     public UserDetailsImpl loadUserByUsername(String username) {
         User user = getUserByUsername(username);
         if (user != null) {
-            //
+
             return new UserDetailsImpl(user, null);
         }
         throw new UsernameNotFoundException("username or password is wrong");

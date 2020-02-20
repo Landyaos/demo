@@ -1,60 +1,72 @@
 package com.utopia.demo.entity;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.annotations.ApiModel;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@ApiModel(value = "Table_导演&编剧")
 @Entity
 @Table(name = "director_screenwriter")
-public class DirectorScreenwriter {
+public class DirectorScreenwriter extends AbstractEntity {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = true)
+    @Column
     private String name;
 
     @Column
     private String foreign_name;
+
     @Column
     private String cover;
+
     @Column
     private Boolean isDirector;
+
     @Column
     private Boolean isScreenwriter;
+
     @Column
-    private String url_douban;
+    private String douban_link;
+
     @Column
-    private String url_imdb;
+    private String imdb_link;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "movie_director_relation",
+            joinColumns = {@JoinColumn(name = "director_screenwriter_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
+    private Set<Movie> movieOfDirectorSet;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "movie_screenwriter_relation",
+            joinColumns = {@JoinColumn(name = "director_screenwriter_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
+    private Set<Movie> movieOfScreenwriterSet;
 
     public DirectorScreenwriter() {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "DirectorScreenwriter{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", foreign_name='" + foreign_name + '\'' +
                 ", cover='" + cover + '\'' +
                 ", isDirector=" + isDirector +
                 ", isScreenwriter=" + isScreenwriter +
-                ", url_douban='" + url_douban + '\'' +
-                ", url_imdb='" + url_imdb + '\'' +
+                ", douban_link='" + douban_link + '\'' +
+                ", imdb_link='" + imdb_link + '\'' +
                 '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
@@ -93,19 +105,35 @@ public class DirectorScreenwriter {
         isScreenwriter = screenwriter;
     }
 
-    public String getUrl_douban() {
-        return url_douban;
+    public String getDouban_link() {
+        return douban_link;
     }
 
-    public void setUrl_douban(String url_douban) {
-        this.url_douban = url_douban;
+    public void setDouban_link(String douban_link) {
+        this.douban_link = douban_link;
     }
 
-    public String getUrl_imdb() {
-        return url_imdb;
+    public String getImdb_link() {
+        return imdb_link;
     }
 
-    public void setUrl_imdb(String url_imdb) {
-        this.url_imdb = url_imdb;
+    public void setImdb_link(String imdb_link) {
+        this.imdb_link = imdb_link;
+    }
+
+    public Set<Movie> getMovieOfDirectorSet() {
+        return movieOfDirectorSet;
+    }
+    @JsonBackReference
+    public void setMovieOfDirectorSet(Set<Movie> directorSet) {
+        this.movieOfDirectorSet = directorSet;
+    }
+
+    public Set<Movie> getMovieOfScreenwriterSet() {
+        return movieOfScreenwriterSet;
+    }
+    @JsonBackReference
+    public void setMovieOfScreenwriterSet(Set<Movie> screenwriterSet) {
+        this.movieOfScreenwriterSet = screenwriterSet;
     }
 }

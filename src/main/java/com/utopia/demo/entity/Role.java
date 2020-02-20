@@ -1,35 +1,41 @@
 package com.utopia.demo.entity;
 
-import javax.persistence.*;
+import io.swagger.annotations.ApiModel;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@ApiModel(value = "Table_角色")
 @Entity
 @Table(name = "role")
-public class Role {
+public class Role extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
+    @Column
     private String name;
 
     @Column
     private String description;
 
-    public Role(String name, String description) {
+    @ManyToMany
+    private Set<Permission> permissionSet;
 
-        this.name = name;
-        this.description = description;
-
+    public Role() {
     }
 
-
-    public Long getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Role{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Set<Permission> getPermissionSet() {
+        return permissionSet;
+    }
+
+    public void setPermissionSet(Set<Permission> permissionSet) {
+        this.permissionSet = permissionSet;
     }
 
     public String getName() {
