@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StarringRepository extends JpaRepository<Starring, Long> {
 
+    Starring findById(long id);
 
 }

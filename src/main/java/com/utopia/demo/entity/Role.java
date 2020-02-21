@@ -23,6 +23,11 @@ public class Role extends AbstractEntity {
     public Role() {
     }
 
+    public Role(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Role{" +

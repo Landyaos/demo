@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DirectorScreenwriterRepository extends JpaRepository<DirectorScreenwriter, Long> {
 
+    DirectorScreenwriter findById(long id);
+
 }

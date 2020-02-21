@@ -3,6 +3,7 @@ package com.utopia.demo.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Proxy;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -33,6 +34,15 @@ public class Comment extends AbstractEntity{
 
     public Comment() {
 
+    }
+
+    public Comment(User user, Movie movie, Float rate, Date date, Long votes, String content) {
+        this.user = user;
+        this.movie = movie;
+        this.rate = rate;
+        this.date = date;
+        this.votes = votes;
+        this.content = content;
     }
 
     @Override

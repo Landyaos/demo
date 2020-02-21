@@ -6,14 +6,11 @@ import com.utopia.demo.entity.Genre;
 import com.utopia.demo.entity.Starring;
 import io.swagger.annotations.ApiModel;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.awt.geom.GeneralPath;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @ApiModel(value = "Index_电影")
@@ -54,7 +51,7 @@ public class EsMovie {
     private Long votes;
 
     @Field(type = FieldType.Keyword)
-    private String weight;
+    private String rate_weight;
 
     @Field(type = FieldType.Keyword)
     private String imdb_link;
@@ -77,22 +74,32 @@ public class EsMovie {
     @Field(type = FieldType.Object)
     private Set<Genre> genreSet;
 
-    public EsMovie(Long id, String name, Integer length, Date release_date, float rate, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
-        this.id = id;
+    public EsMovie() {
+
+    }
+
+    public EsMovie(String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, Float rate, Long votes, String rate_weight, String imdb_link, String douban_link, String rottenTomatoes_link, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
         this.name = name;
+        this.foreign_name = foreign_name;
         this.length = length;
+        this.language = language;
+        this.area = area;
         this.release_date = release_date;
+        this.box_office = box_office;
+        this.cover_url = cover_url;
         this.rate = rate;
+        this.votes = votes;
+        this.rate_weight = rate_weight;
+        this.imdb_link = imdb_link;
+        this.douban_link = douban_link;
+        this.rottenTomatoes_link = rottenTomatoes_link;
         this.directorSet = directorSet;
         this.screenwriterSet = screenwriterSet;
         this.starringSet = starringSet;
         this.genreSet = genreSet;
     }
 
-    public EsMovie() {
-    }
-
-    public EsMovie(Long id, String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, float rate, long votes, String weight, String imdb_link, String douban_link, String rottenTomatoes_link, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
+    public EsMovie(Long id, String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, Float rate, Long votes, String rate_weight, String imdb_link, String douban_link, String rottenTomatoes_link, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
         this.id = id;
         this.name = name;
         this.foreign_name = foreign_name;
@@ -104,7 +111,7 @@ public class EsMovie {
         this.cover_url = cover_url;
         this.rate = rate;
         this.votes = votes;
-        this.weight = weight;
+        this.rate_weight = rate_weight;
         this.imdb_link = imdb_link;
         this.douban_link = douban_link;
         this.rottenTomatoes_link = rottenTomatoes_link;
@@ -128,7 +135,7 @@ public class EsMovie {
                 ", cover_url='" + cover_url + '\'' +
                 ", rate=" + rate +
                 ", votes=" + votes +
-                ", weight='" + weight + '\'' +
+                ", weight='" + rate_weight + '\'' +
                 ", imdb_link='" + imdb_link + '\'' +
                 ", douban_link='" + douban_link + '\'' +
                 ", rottenTomatoes_link='" + rottenTomatoes_link + '\'' +
@@ -227,12 +234,12 @@ public class EsMovie {
         this.votes = votes;
     }
 
-    public String getWeight() {
-        return weight;
+    public String getRate_weight() {
+        return rate_weight;
     }
 
-    public void setWeight(String weight) {
-        this.weight = weight;
+    public void setRate_weight(String rate_weight) {
+        this.rate_weight = rate_weight;
     }
 
     public String getImdb_link() {

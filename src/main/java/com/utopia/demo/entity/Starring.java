@@ -2,6 +2,7 @@ package com.utopia.demo.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.apache.el.stream.StreamELResolverImpl;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
@@ -33,8 +34,12 @@ public class Starring extends AbstractEntity {
     public Starring() {
     }
 
-    public Starring(String name) {
+    public Starring(String name, String foreign_name, String cover_url, String douban_link, String imdb_link) {
         this.name = name;
+        this.foreign_name = foreign_name;
+        this.cover_url = cover_url;
+        this.douban_link = douban_link;
+        this.imdb_link = imdb_link;
     }
 
     @Override

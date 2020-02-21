@@ -2,7 +2,6 @@ package com.utopia.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModel;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,7 +18,7 @@ public class DirectorScreenwriter extends AbstractEntity {
     private String foreign_name;
 
     @Column
-    private String cover;
+    private String cover_url;
 
     @Column
     private Boolean isDirector;
@@ -53,12 +52,14 @@ public class DirectorScreenwriter extends AbstractEntity {
 
     }
 
-    public DirectorScreenwriter(String name) {
+    public DirectorScreenwriter(String name, String foreign_name, String cover_url, Boolean isDirector, Boolean isScreenwriter, String douban_link, String imdb_link) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        this.foreign_name = foreign_name;
+        this.cover_url = cover_url;
+        this.isDirector = isDirector;
+        this.isScreenwriter = isScreenwriter;
+        this.douban_link = douban_link;
+        this.imdb_link = imdb_link;
     }
 
     @Override
@@ -66,12 +67,16 @@ public class DirectorScreenwriter extends AbstractEntity {
         return "DirectorScreenwriter{" +
                 "name='" + name + '\'' +
                 ", foreign_name='" + foreign_name + '\'' +
-                ", cover='" + cover + '\'' +
+                ", cover='" + cover_url + '\'' +
                 ", isDirector=" + isDirector +
                 ", isScreenwriter=" + isScreenwriter +
                 ", douban_link='" + douban_link + '\'' +
                 ", imdb_link='" + imdb_link + '\'' +
                 '}';
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -86,12 +91,12 @@ public class DirectorScreenwriter extends AbstractEntity {
         this.foreign_name = foreign_name;
     }
 
-    public String getCover() {
-        return cover;
+    public String getCover_url() {
+        return cover_url;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setCover_url(String cover) {
+        this.cover_url = cover;
     }
 
     public Boolean getDirector() {

@@ -33,8 +33,10 @@ public class Genre extends AbstractEntity {
     public Genre() {
     }
 
-    public Genre(String name) {
+    public Genre(String name, String foreign_name, String description) {
         this.name = name;
+        this.foreign_name = foreign_name;
+        this.description = description;
     }
 
     @Override

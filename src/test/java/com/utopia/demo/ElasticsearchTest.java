@@ -24,30 +24,23 @@ import java.util.Set;
 public class ElasticsearchTest {
 
     @Autowired
-    private EsDemoRepository esDemoRepository;
-    @Autowired
     private MovieRepository movieRepository;
     @Autowired
     private EsMovieRepository esMovieRepository;
 
     @Test
-    public void esDemoTest() {
-        Set<Genre> genres = new HashSet<>();
-        genres.add(new Genre("xxxx"));
-        genres.add(new Genre("syyyy"));
-        EsDemo esDemo = new EsDemo(1L, "STONE", new Date(), new String[]{"1x23", "xxx"}, genres);
-        esDemoRepository.save(esDemo);
-    }
-
-    @Test
     public void esMovieTest() {
-        Movie movie = movieRepository.findAllById(1);
+
+        Movie movie1 = movieRepository.findById(1);
+        Movie movie2 = movieRepository.findById(2);
+        Movie movie3 = movieRepository.findById(3);
+
         EsMovie esMovie = new EsMovie();
-        System.out.println(movie);
-
-        BeanUtils.copyProperties(movie, esMovie);
-        System.out.println(esMovie);
-
+        BeanUtils.copyProperties(movie1, esMovie);
+        esMovieRepository.save(esMovie);
+        BeanUtils.copyProperties(movie2, esMovie);
+        esMovieRepository.save(esMovie);
+        BeanUtils.copyProperties(movie3, esMovie);
         esMovieRepository.save(esMovie);
 
     }

@@ -37,6 +37,14 @@ public class User extends AbstractEntity{
         this.phone = phone;
         this.mail = mail;
     }
+    public User(String username, String password, String phone, String mail, String icon) {
+        this.username = username;
+        this.password = password;
+        this.phone = phone;
+        this.mail = mail;
+        this.icon = icon;
+    }
+
 
     @Override
     public String toString() {

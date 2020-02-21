@@ -71,20 +71,25 @@ public class Movie extends AbstractEntity {
 
     public Movie() {
     }
-    public Movie(String name, Integer length, Date release_date, float rate, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
+    public Movie(String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, Float rate, Long votes, String rate_weight, String imdb_link, String douban_link, String rottenTomatoes_link, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
         this.name = name;
+        this.foreign_name = foreign_name;
         this.length = length;
+        this.language = language;
+        this.area = area;
         this.release_date = release_date;
+        this.box_office = box_office;
+        this.cover_url = cover_url;
         this.rate = rate;
+        this.votes = votes;
+        this.rate_weight = rate_weight;
+        this.imdb_link = imdb_link;
+        this.douban_link = douban_link;
+        this.rottenTomatoes_link = rottenTomatoes_link;
         this.directorSet = directorSet;
         this.screenwriterSet = screenwriterSet;
         this.starringSet = starringSet;
         this.genreSet = genreSet;
-    }
-
-    public Movie(String name, Date date) {
-        this.name = name;
-        this.release_date = date;
     }
 
     @Override

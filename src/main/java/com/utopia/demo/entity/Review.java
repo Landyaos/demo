@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "review")
-public class Review extends AbstractEntity{
+public class Review extends AbstractEntity {
 
     @OneToOne
     private User user;
@@ -32,6 +32,20 @@ public class Review extends AbstractEntity{
     @Basic(fetch = FetchType.EAGER)
     @Column(columnDefinition = "text")
     private String content;
+
+
+    public Review() {
+    }
+
+    public Review(User user, Movie movie, String title, Float rate, Date date, Long votes, String content) {
+        this.user = user;
+        this.movie = movie;
+        this.title = title;
+        this.rate = rate;
+        this.date = date;
+        this.votes = votes;
+        this.content = content;
+    }
 
     @Override
     public String toString() {
