@@ -2,6 +2,7 @@ package com.utopia.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModel;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class Permission extends AbstractEntity {
     @Column
     private String resource;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_permission_relation",
             joinColumns = {@JoinColumn(name = "permission_id")},

@@ -1,5 +1,7 @@
 package com.utopia.demo.entity;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 
 @Entity

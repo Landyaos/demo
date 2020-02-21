@@ -1,6 +1,7 @@
 package com.utopia.demo.entity;
 
 import io.swagger.annotations.ApiModel;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Set;

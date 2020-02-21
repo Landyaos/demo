@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class DemoApplicationTests {
 
-
     @Test
-    @GetMapping(value = "/auth")
-    public String JWT_test() {
-        return  "hello auth";
-    }
+    public void demoApplicationTest() {
 
+
+    }
 }

@@ -15,7 +15,7 @@ public class RedisTest {
     @Autowired
     private RedisService redisService;
     @Test
-    public void redisTest() {
+    public void redisTest1() {
 
         redisService.set("stone", "stone");
         System.out.println(redisService.get("stone"));

@@ -2,6 +2,8 @@ package com.utopia.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
+import org.apache.lucene.search.grouping.GroupFacetCollector;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -55,19 +57,34 @@ public class Movie extends AbstractEntity {
     @Column
     private String rottenTomatoes_link;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Genre> genreSet;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<DirectorScreenwriter> directorSet;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<DirectorScreenwriter> screenwriterSet;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Starring> starringSet;
 
     public Movie() {
+    }
+    public Movie(String name, Integer length, Date release_date, float rate, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
+        this.name = name;
+        this.length = length;
+        this.release_date = release_date;
+        this.rate = rate;
+        this.directorSet = directorSet;
+        this.screenwriterSet = screenwriterSet;
+        this.starringSet = starringSet;
+        this.genreSet = genreSet;
+    }
+
+    public Movie(String name, Date date) {
+        this.name = name;
+        this.release_date = date;
     }
 
     @Override
@@ -87,10 +104,6 @@ public class Movie extends AbstractEntity {
                 ", douban_link='" + douban_link + '\'' +
                 ", imdb_link='" + imdb_link + '\'' +
                 ", rottenTomatoes_link='" + rottenTomatoes_link + '\'' +
-                ", genreSet=" + genreSet +
-                ", directorSet=" + directorSet +
-                ", screenwriterSet=" + screenwriterSet +
-                ", starringSet=" + starringSet +
                 '}';
     }
 

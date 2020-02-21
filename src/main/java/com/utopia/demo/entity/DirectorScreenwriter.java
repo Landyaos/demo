@@ -2,6 +2,7 @@ package com.utopia.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModel;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class DirectorScreenwriter extends AbstractEntity {
     @Column
     private String imdb_link;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_director_relation",
             joinColumns = {@JoinColumn(name = "director_screenwriter_id")},
@@ -40,7 +41,7 @@ public class DirectorScreenwriter extends AbstractEntity {
     )
     private Set<Movie> movieOfDirectorSet;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_screenwriter_relation",
             joinColumns = {@JoinColumn(name = "director_screenwriter_id")},
@@ -50,6 +51,10 @@ public class DirectorScreenwriter extends AbstractEntity {
 
     public DirectorScreenwriter() {
 
+    }
+
+    public DirectorScreenwriter(String name) {
+        this.name = name;
     }
 
     public String getName() {

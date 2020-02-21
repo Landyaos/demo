@@ -2,6 +2,8 @@ package com.utopia.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.annotations.ApiModel;
+import org.hibernate.annotations.Proxy;
+import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -20,13 +22,7 @@ public class Genre extends AbstractEntity {
     @Column
     private String description;
 
-    /**
-     * @ManyToMany(targetEntity = Parent.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-     * @JoinTable(joinColumns = {@JoinColumn(name = "child_id")},
-     * inverseJoinColumns = {@JoinColumn(name = "parent_id")})
-     * private Set<Parent> parentSet;
-     */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "movie_genre_relation",
             joinColumns = {@JoinColumn(name = "genre_id")},
             inverseJoinColumns = {@JoinColumn(name = "movie_id")}
@@ -37,10 +33,8 @@ public class Genre extends AbstractEntity {
     public Genre() {
     }
 
-    public Genre(String name, String foreign_name, String description) {
+    public Genre(String name) {
         this.name = name;
-        this.foreign_name = foreign_name;
-        this.description = description;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.utopia.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,7 +29,7 @@ public class Review extends AbstractEntity{
     @Column
     private Long votes;
 
-    @Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.EAGER)
     @Column(columnDefinition = "text")
     private String content;
 

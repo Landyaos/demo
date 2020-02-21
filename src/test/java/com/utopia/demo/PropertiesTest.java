@@ -16,6 +16,7 @@ public class PropertiesTest {
 
     @Test
     public void EsPropertiesTest() {
+
         System.out.println(jwtProperties);
         System.out.println(elasticsearchProperties);
 

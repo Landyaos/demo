@@ -2,6 +2,7 @@ package com.utopia.demo.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class Starring extends AbstractEntity {
     @Column
     private String imdb_link;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_starring_relation",
             joinColumns = {@JoinColumn(name = "starring_id")},
@@ -30,6 +31,10 @@ public class Starring extends AbstractEntity {
     private Set<Movie> movieSet;
 
     public Starring() {
+    }
+
+    public Starring(String name) {
+        this.name = name;
     }
 
     @Override
