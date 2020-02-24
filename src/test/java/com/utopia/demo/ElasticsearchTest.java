@@ -36,6 +36,7 @@ public class ElasticsearchTest {
         Movie movie3 = movieRepository.findById(3);
 
         EsMovie esMovie = new EsMovie();
+
         BeanUtils.copyProperties(movie1, esMovie);
         esMovieRepository.save(esMovie);
         BeanUtils.copyProperties(movie2, esMovie);
