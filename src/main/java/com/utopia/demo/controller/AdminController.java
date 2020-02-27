@@ -1,7 +1,12 @@
 package com.utopia.demo.controller;
 
 import com.utopia.demo.common.CommonResult;
+import com.utopia.demo.dto.GenreParam;
+import com.utopia.demo.dto.UserParam;
+import com.utopia.demo.entity.Genre;
 import com.utopia.demo.entity.User;
+import com.utopia.demo.repository.GenreRepository;
+import com.utopia.demo.service.GenreService;
 import com.utopia.demo.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +19,7 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @ApiOperation(value = "获取所有用户信息", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/user/_all")
@@ -28,7 +33,7 @@ public class AdminController {
 
     @ApiOperation(value = "删除用户", httpMethod = "DELETE", response = CommonResult.class)
     @DeleteMapping(value = "/user/{id}")
-    public CommonResult getUserAll(
+    public CommonResult deleteUserById(
             @PathVariable(value = "id") long id
     ) {
         if (userService.deleteUser(id)) {
@@ -36,4 +41,5 @@ public class AdminController {
         }
         return CommonResult.failed("删除用户失败");
     }
+
 }

@@ -2,7 +2,7 @@ package com.utopia.demo.dto;
 
 import javax.persistence.Column;
 
-public class DirectorAndScreenwriterParam {
+public class DirectorScreenwriterParam {
     private Long id;
     private String name;
     private String foreign_name;
@@ -12,10 +12,10 @@ public class DirectorAndScreenwriterParam {
     private String douban_link;
     private String imdb_link;
 
-    public DirectorAndScreenwriterParam() {
+    public DirectorScreenwriterParam() {
     }
 
-    public DirectorAndScreenwriterParam(Long id, String name, String foreign_name, String cover_url, Boolean isDirector, Boolean isScreenwriter, String douban_link, String imdb_link) {
+    public DirectorScreenwriterParam(Long id, String name, String foreign_name, String cover_url, Boolean isDirector, Boolean isScreenwriter, String douban_link, String imdb_link) {
         this.id = id;
         this.name = name;
         this.foreign_name = foreign_name;
