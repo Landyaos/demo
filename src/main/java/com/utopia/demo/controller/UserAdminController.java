@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -60,6 +61,7 @@ public class UserAdminController {
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
+        tokenMap.put(tokenHeader,tokenHead+token);
         return CommonResult.success(tokenMap);
     }
 
@@ -77,9 +79,9 @@ public class UserAdminController {
         return CommonResult.success(captcha, "获取验证码成功");
     }
 
-    @ApiOperation(value = "获取用户信息", httpMethod = "GET", response = CommonResult.class)
-    @GetMapping(value = "/user")
-    public CommonResult getUserDetail(@RequestParam("id") Long id) {
+    @ApiOperation(value = "获取单个用户信息", httpMethod = "GET", response = CommonResult.class)
+    @GetMapping(value = "/user/{id}")
+    public CommonResult getUserDetail(@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
         if (user == null) {
             return CommonResult.failed("用户id不存在.");
@@ -88,10 +90,12 @@ public class UserAdminController {
     }
 
     @ApiOperation(value = "修改用户信息", httpMethod = "PUT", response = CommonResult.class)
-    @PutMapping(value = "/user")
-    public CommonResult putUserDetail(@RequestBody UserParam userParam) {
+    @PutMapping(value = "/user/{id}")
+    public CommonResult putUserDetail(
+            @PathVariable(value = "id") long id,
+            @RequestBody UserParam userParam) {
         User user = userService.updateUser(userParam);
-        if (user == null) {
+        if (user == null || id != userParam.getId()) {
             return CommonResult.failed("用户名已存在");
         }
         return CommonResult.success(user, "用户信息更新成功.");

@@ -1,10 +1,5 @@
 package com.utopia.demo.common;
 
-import javax.persistence.criteria.CommonAbstractCriteria;
-import javax.servlet.http.PushBuilder;
-import java.security.PublicKey;
-import java.util.zip.CheckedOutputStream;
-
 /**
  * 后端返回对象
  *
@@ -13,7 +8,7 @@ import java.util.zip.CheckedOutputStream;
 public class CommonResult<T> {
 
     // 状态码
-    private long code;
+    private long status;
     // 信息
     private String message;
     // 数据
@@ -23,8 +18,8 @@ public class CommonResult<T> {
 
     }
 
-    protected CommonResult(long code, String message, T data) {
-        this.code = code;
+    protected CommonResult(long status, String message, T data) {
+        this.status = status;
         this.message = message;
         this.data = data;
     }
@@ -71,12 +66,12 @@ public class CommonResult<T> {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
-    public long getCode() {
-        return code;
+    public long getStatus() {
+        return status;
     }
 
-    public void setCode(long code) {
-        this.code = code;
+    public void setStatus(long status) {
+        this.status = status;
     }
 
     public String getMessage() {

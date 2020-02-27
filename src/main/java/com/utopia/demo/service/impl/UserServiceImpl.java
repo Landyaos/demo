@@ -7,6 +7,9 @@ import com.utopia.demo.repository.UserRepository;
 import com.utopia.demo.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -30,19 +33,19 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public User getUserByUsername(String username) {
+    public Page<User> getAllUser(int pageNum, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNum-1, pageSize);
+        return userRepository.findAll(pageable);
+    }
 
+    @Override
+    public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
     public User getUserById(long id) {
         return userRepository.findById(id);
-    }
-
-    @Override
-    public List<User> userListByUsername(String username, int pageSize, int pageNum) {
-        return null;
     }
 
     @Override
@@ -58,8 +61,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteUser(long id) {
-        return 0;
+    public Boolean deleteUser(long id) {
+        User user = userRepository.getOne(id);
+        user.setState(false);
+        userRepository.save(user);
+        return true;
     }
 
     @Override

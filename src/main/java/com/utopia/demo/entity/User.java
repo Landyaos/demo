@@ -1,5 +1,6 @@
 package com.utopia.demo.entity;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
@@ -23,9 +24,11 @@ public class User extends AbstractEntity{
     @Column
     private String icon;
 
+    @ColumnDefault("true")
+    private Boolean state;
+
     @OneToOne
     private Role role;
-
 
     public User() {
 
@@ -45,7 +48,6 @@ public class User extends AbstractEntity{
         this.icon = icon;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -54,8 +56,17 @@ public class User extends AbstractEntity{
                 ", phone='" + phone + '\'' +
                 ", mail='" + mail + '\'' +
                 ", icon='" + icon + '\'' +
+                ", state=" + state +
                 ", role=" + role +
                 '}';
+    }
+
+    public Boolean getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
     }
 
     public String getUsername() {
