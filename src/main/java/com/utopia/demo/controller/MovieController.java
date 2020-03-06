@@ -2,9 +2,7 @@ package com.utopia.demo.controller;
 
 import com.utopia.demo.common.CommonResult;
 import com.utopia.demo.dto.MovieParam;
-import com.utopia.demo.dto.StarringParam;
 import com.utopia.demo.entity.Movie;
-import com.utopia.demo.entity.Starring;
 import com.utopia.demo.service.MovieService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

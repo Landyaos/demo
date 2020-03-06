@@ -35,7 +35,7 @@ public class Movie extends AbstractEntity {
 
     @Column
     private Float box_office;
-
+    
     @Column
     private String cover_url;
 
@@ -44,6 +44,9 @@ public class Movie extends AbstractEntity {
 
     @Column
     private Long votes;
+
+    @Column(columnDefinition = "text")
+    private String profile;
 
     @Column
     private String rate_weight;
@@ -71,7 +74,29 @@ public class Movie extends AbstractEntity {
 
     public Movie() {
     }
-    public Movie(String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, Float rate, Long votes, String rate_weight, String imdb_link, String douban_link, String rottenTomatoes_link, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
+
+    public Movie(Long id) {
+        this.setId(id);
+    }
+
+    public Movie(String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, Float rate, Long votes, String rate_weight, String imdb_link, String douban_link, String rottenTomatoes_link, String profile) {
+        this.name = name;
+        this.foreign_name = foreign_name;
+        this.length = length;
+        this.language = language;
+        this.area = area;
+        this.release_date = release_date;
+        this.box_office = box_office;
+        this.cover_url = cover_url;
+        this.rate = rate;
+        this.votes = votes;
+        this.rate_weight = rate_weight;
+        this.imdb_link = imdb_link;
+        this.douban_link = douban_link;
+        this.rottenTomatoes_link = rottenTomatoes_link;
+        this.profile = profile;
+    }
+    public Movie(String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, Float rate, Long votes, String rate_weight, String imdb_link, String douban_link, String rottenTomatoes_link, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet, String profile) {
         this.name = name;
         this.foreign_name = foreign_name;
         this.length = length;
@@ -90,6 +115,7 @@ public class Movie extends AbstractEntity {
         this.screenwriterSet = screenwriterSet;
         this.starringSet = starringSet;
         this.genreSet = genreSet;
+        this.profile = profile;
     }
 
     @Override
@@ -110,6 +136,14 @@ public class Movie extends AbstractEntity {
                 ", imdb_link='" + imdb_link + '\'' +
                 ", rottenTomatoes_link='" + rottenTomatoes_link + '\'' +
                 '}';
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public String getName() {
