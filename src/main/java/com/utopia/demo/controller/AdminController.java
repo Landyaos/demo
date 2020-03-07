@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class AdminController {
@@ -156,8 +158,33 @@ public class AdminController {
                     )
             );
         }
+        List<Movie> movieList = movieRepository.findAll();
+        for (Movie movie : movieList) {
+            System.out.println(movie.getId());
+            Set<Genre> genreSet = new HashSet<>();
+            Set<DirectorScreenwriter> screenwriterSet = new HashSet<>();
+            Set<DirectorScreenwriter> directorSet = new HashSet<>();
+            Set<Starring> starringSet = new HashSet<>();
+            for (MovieGenreMigration movieGenreMigration : movieGenreMigrationRepository.findByMovie_id(movie.getId())) {
+                System.out.println(movieGenreMigration);
+                genreSet.add(new Genre(movieGenreMigration.getGenre_id()));
+            }
+            for (MovieStarringMigration movieStarringMigration : movieStarringMigrationRepository.findByMovie_id(movie.getId())) {
+                starringSet.add(new Starring(movieStarringMigration.getStarring_id()));
+            }
+            for (MovieDirectorMigration movieDirectorMigration : movieDirectorMigrationRepository.findByMovie_id(movie.getId())) {
+                directorSet.add(new DirectorScreenwriter(movieDirectorMigration.getDirector_id()));
+            }
+            for (MovieScreenwriterMigration movieScreenwriterMigration : movieScreenwriterMigrationRepository.findByMovie_id(movie.getId())) {
+                screenwriterSet.add(new DirectorScreenwriter(movieScreenwriterMigration.getScreenwriter_id()));
+            }
 
-
+            movie.setGenreSet(genreSet);
+            movie.setScreenwriterSet(screenwriterSet);
+            movie.setDirectorSet(directorSet);
+            movie.setStarringSet(starringSet);
+            movieRepository.save(movie);
+        }
         return CommonResult.success("数据迁移成功");
     }
 }

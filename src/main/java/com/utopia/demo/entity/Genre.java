@@ -33,6 +33,10 @@ public class Genre extends AbstractEntity {
     public Genre() {
     }
 
+    public Genre(Long id) {
+        this.setId(id);
+    }
+
     public Genre(String name, String foreign_name, String description) {
         this.name = name;
         this.foreign_name = foreign_name;

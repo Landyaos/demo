@@ -61,6 +61,47 @@ select `demo`.`movie`.`name`         AS `name`,
        `demo`.`movie`.`url_imdb`     AS `imdb_link`,
        `demo`.`movie`.`profile`      AS `profile`
 from `demo`.`movie`;
+--
+create view movie_genre_migration as
+select `m`.`id` AS `movie_id`, `g`.`id` AS `genre_id`
+from `demo`.`movie_genre_relation` `mgr`
+         join `recommendsystem`.`movie` `m`
+         join `recommendsystem`.`genre` `g`
+where ((`mgr`.`genre` = `g`.`name`) and (0 <> locate((('%' + `mgr`.`movie_id`) + '%'), `m`.`douban_link`)));
+--
+create definer = root@localhost view movie_director_migration as
+select `m`.`id` AS `movie_id`, `ds`.`id` AS `director_id`, `mdr`.`ranking` AS `ranking`
+from `demo`.`movie_director_relation` `mdr`
+         join `recommendsystem`.`movie` `m`
+         join `recommendsystem`.`director_screenwriter` `ds`
+where ((0 <> locate((('%' + `mdr`.`movie_id`) + '%'), `m`.`douban_link`)) and (`mdr`.`url` = `ds`.`douban_link`));
+--
+create definer = root@localhost view recommendsystem.movie_screenwriter_migration as
+select `m`.`id` AS `movie_id`, `ds`.`id` AS `screenwriter_id`, `msr`.`ranking` AS `ranking`
+from `demo`.`movie_screenwriter_relation` `msr`
+         join `recommendsystem`.`movie` `m`
+         join `recommendsystem`.`director_screenwriter` `ds`
+where ((0 <> locate((('%' + `msr`.`movie_id`) + '%'), `m`.`douban_link`)) and (`msr`.`url` = `ds`.`douban_link`));
+--
+create definer = root@localhost view recommendsystem.movie_screenwriter_migration as
+select `m`.`id` AS `movie_id`, `ds`.`id` AS `screenwriter_id`, `msr`.`ranking` AS `ranking`
+from `demo`.`movie_screenwriter_relation` `msr`
+         join `recommendsystem`.`movie` `m`
+         join `recommendsystem`.`director_screenwriter` `ds`
+where ((0 <> locate((('%' + `msr`.`movie_id`) + '%'), `m`.`douban_link`)) and (`msr`.`url` = `ds`.`douban_link`));
+--
+create definer = root@localhost view recommendsystem.movie_director_migration as
+select `m`.`id` AS `movie_id`, `ds`.`id` AS `director_id`, `mdr`.`ranking` AS `ranking`
+from `demo`.`movie_director_relation` `mdr`
+         join `recommendsystem`.`movie` `m`
+         join `recommendsystem`.`director_screenwriter` `ds`
+where ((0 <> locate((('%' + `mdr`.`movie_id`) + '%'), `m`.`douban_link`)) and (`mdr`.`url` = `ds`.`douban_link`));
+
+
+
+
+
+
 
 
 -- 创建 comment_migration

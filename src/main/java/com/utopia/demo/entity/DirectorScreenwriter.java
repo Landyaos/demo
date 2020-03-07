@@ -52,6 +52,10 @@ public class DirectorScreenwriter extends AbstractEntity {
 
     }
 
+    public DirectorScreenwriter(Long id) {
+        this.setId(id);
+    }
+
     public DirectorScreenwriter(String name, String foreign_name, String cover_url, Boolean isDirector, Boolean isScreenwriter, String douban_link, String imdb_link) {
         this.name = name;
         this.foreign_name = foreign_name;

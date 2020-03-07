@@ -4,6 +4,7 @@ import com.utopia.demo.entity.*;
 import com.utopia.demo.entity.view.*;
 import com.utopia.demo.repository.*;
 import com.utopia.demo.repository.migration.*;
+import net.bytebuddy.agent.builder.AgentBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,14 @@ public class JpaTest {
 
     @Autowired
     private MovieMigrationRepository movieMigrationRepository;
-
+    @Autowired
+    private MovieGenreMigrationRepository movieGenreMigrationRepository;
+    @Autowired
+    private MovieDirectorMigrationRepository movieDirectorMigrationRepository;
+    @Autowired
+    private MovieScreenwriterMigrationRepository movieScreenwriterMigrationRepository;
+    @Autowired
+    private MovieStarringMigrationRepository movieStarringMigrationRepository;
 
     @Test
     public void viewTest() {

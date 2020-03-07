@@ -34,6 +34,10 @@ public class Starring extends AbstractEntity {
     public Starring() {
     }
 
+    public Starring(Long id) {
+        this.setId(id);
+    }
+
     public Starring(String name, String foreign_name, String cover_url, String douban_link, String imdb_link) {
         this.name = name;
         this.foreign_name = foreign_name;
