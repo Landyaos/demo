@@ -30,7 +30,6 @@ public class JpaTest {
     private DirectorScreenwriterRepository directorScreenwriterRepository;
     @Autowired
     private UserMigrationRepository userMigrationRepository;
-
     @Autowired
     private MovieMigrationRepository movieMigrationRepository;
     @Autowired
@@ -41,9 +40,45 @@ public class JpaTest {
     private MovieScreenwriterMigrationRepository movieScreenwriterMigrationRepository;
     @Autowired
     private MovieStarringMigrationRepository movieStarringMigrationRepository;
+    @Autowired
+    private CommentMigrationRepository commentMigrationRepository;
+    @Autowired
+    private ReviewMigrationRepository reviewMigrationRepository;
+    @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Test
     public void viewTest() {
+        List<CommentMigration> commentMigrationList = commentMigrationRepository.findAll();
+        for (CommentMigration commentMigration : commentMigrationList) {
+            commentRepository.save(
+                    new Comment(
+                            new User(commentMigration.getUser()),
+                            new Movie(commentMigration.getMovie()),
+                            commentMigration.getRate(),
+                            commentMigration.getDate(),
+                            commentMigration.getVotes(),
+                            commentMigration.getContent()
+                    ));
+        }
+
+        List<ReviewMigration> reviewMigrationList = reviewMigrationRepository.findAll();
+        for (ReviewMigration reviewMigration : reviewMigrationList) {
+            reviewRepository.save(
+                    new Review(
+                            new User(reviewMigration.getUser()),
+                            new Movie(reviewMigration.getMovie()),
+                            reviewMigration.getTitle(),
+                            reviewMigration.getRate(),
+                            reviewMigration.getDate(),
+                            reviewMigration.getVotes(),
+                            reviewMigration.getContent()
+                    )
+            );
+        }
+
 
     }
 }

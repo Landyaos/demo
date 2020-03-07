@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Set;
 
 @ApiModel(value = "Index_电影")
-@Document(indexName = "movie")
+@Document(indexName = "movie", type = "_doc")
 public class EsMovie {
     @Id
     private Long id;
@@ -24,6 +24,9 @@ public class EsMovie {
 
     @Field(type = FieldType.Text)
     private String foreign_name;
+
+    @Field(type = FieldType.Text)
+    private String profile;
 
     @Field(type = FieldType.Integer)
     private Integer length;
@@ -168,6 +171,14 @@ public class EsMovie {
 
     public void setForeign_name(String foreign_name) {
         this.foreign_name = foreign_name;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public Integer getLength() {
