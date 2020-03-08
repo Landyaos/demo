@@ -6,9 +6,11 @@ import com.utopia.demo.entity.Review;
 import com.utopia.demo.nosql.elasticsearch.dto.EsMovieParam;
 import com.utopia.demo.nosql.elasticsearch.dto.EsUserParam;
 import com.utopia.demo.nosql.elasticsearch.pojo.EsComment;
+import com.utopia.demo.nosql.elasticsearch.pojo.EsDemo;
 import com.utopia.demo.nosql.elasticsearch.pojo.EsMovie;
 import com.utopia.demo.nosql.elasticsearch.pojo.EsReview;
 import com.utopia.demo.nosql.elasticsearch.repository.EsCommentRepository;
+import com.utopia.demo.nosql.elasticsearch.repository.EsDemoRepository;
 import com.utopia.demo.nosql.elasticsearch.repository.EsMovieRepository;
 import com.utopia.demo.nosql.elasticsearch.repository.EsReviewRepository;
 import com.utopia.demo.repository.CommentRepository;
@@ -18,6 +20,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -38,6 +42,9 @@ public class ElasticsearchTest {
     private EsReviewRepository esReviewRepository;
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private EsDemoRepository esDemoRepository;
+
     @Test
     public void esCommentMigration() {
         List<Comment> commentList = commentRepository.findAll();
@@ -52,7 +59,6 @@ public class ElasticsearchTest {
             esComment.setEsMovieParam(esMovieParam);
             esCommentRepository.save(esComment);
         }
-
     }
 
     @Test
@@ -69,8 +75,6 @@ public class ElasticsearchTest {
             esReview.setEsMovieParam(esMovieParam);
             esReviewRepository.save(esReview);
         }
-
-
     }
 
     @Test
@@ -81,8 +85,21 @@ public class ElasticsearchTest {
             BeanUtils.copyProperties(movie, esMovie);
             esMovieRepository.save(esMovie);
         }
+    }
 
-
+    @Test
+    public void getEsMovie() {
+        Pageable pageable = PageRequest.of(0, 10);
 
     }
+
+    @Test
+    public void getDemo() {
+
+        //for (int i = 0; i < 20; i++) {
+        //    esDemoRepository.save(new EsDemo((long) i, "name" + i, new String[]{"1", "2", "3"}));
+        //}
+        System.out.println(esDemoRepository.get());
+    }
+
 }

@@ -23,6 +23,7 @@ public class Starring extends AbstractEntity {
     @Column
     private String imdb_link;
 
+    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_starring_relation",
@@ -101,7 +102,6 @@ public class Starring extends AbstractEntity {
         return movieSet;
     }
 
-    @JsonBackReference
     public void setMovieSet(Set<Movie> movieSet) {
         this.movieSet = movieSet;
     }

@@ -7,33 +7,38 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 
 @Document(indexName = "demo",type = "_doc")
-public class EsDemo {
+public class EsDemo implements Serializable {
     @Id
     private Long id;
+
     @Field(type = FieldType.Text)
     private String name;
-
-    @Field(type = FieldType.Date)
-    @JsonFormat(shape =JsonFormat.Shape.STRING,pattern ="yyyy-MM-dd",timezone ="GMT+8")
-    private Date date;
 
     @Field(type = FieldType.Text)
     private String[] tags;
 
-    @Field(type = FieldType.Object)
-    private Set<Genre> genres;
+    public EsDemo() {
+    }
 
-
-    public EsDemo(Long id, String name, Date date, String[] tags, Set<Genre> genres) {
+    public EsDemo(Long id, String name, String[] tags) {
         this.id = id;
         this.name = name;
-        this.date = date;
         this.tags = tags;
-        this.genres = genres;
+    }
+
+    @Override
+    public String toString() {
+        return "EsDemo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", tags=" + Arrays.toString(tags) +
+                '}';
     }
 
     public Long getId() {
@@ -52,27 +57,11 @@ public class EsDemo {
         this.name = name;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String[] getTags() {
         return tags;
     }
 
     public void setTags(String[] tags) {
         this.tags = tags;
-    }
-
-    public Set<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(Set<Genre> genres) {
-        this.genres = genres;
     }
 }

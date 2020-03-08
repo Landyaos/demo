@@ -17,6 +17,7 @@ import com.utopia.demo.repository.*;
 import com.utopia.demo.repository.migration.*;
 import com.utopia.demo.service.GenreService;
 import com.utopia.demo.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Api(value = "管理端控制器")
 @RestController
 public class AdminController {
 

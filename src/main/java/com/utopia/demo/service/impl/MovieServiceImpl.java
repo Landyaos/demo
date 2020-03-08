@@ -1,8 +1,11 @@
 package com.utopia.demo.service.impl;
 
+import com.alibaba.druid.sql.PagerUtils;
 import com.sun.xml.bind.v2.model.core.ID;
 import com.utopia.demo.dto.MovieParam;
 import com.utopia.demo.entity.Movie;
+import com.utopia.demo.nosql.elasticsearch.pojo.EsMovie;
+import com.utopia.demo.nosql.elasticsearch.repository.EsMovieRepository;
 import com.utopia.demo.repository.MovieRepository;
 import com.utopia.demo.service.MovieService;
 import org.springframework.beans.BeanUtils;
@@ -17,8 +20,12 @@ import java.util.Map;
 
 @Service
 public class MovieServiceImpl implements MovieService {
+
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private EsMovieRepository esMovieRepository;
+
 
     @Override
     public Page<Movie> getAll(Integer pageNum, Integer pageSize) {
@@ -60,4 +67,48 @@ public class MovieServiceImpl implements MovieService {
         return movie;
     }
 
+    @Override
+    public Page<EsMovie> getAllEsMovie(Integer pageNum, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        return esMovieRepository.findAll(pageable);
+    }
+
+    @Override
+    public EsMovie getEsMovieById(Long id) {
+        return esMovieRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page<EsMovie> getPopularRecommend(Integer pageNum, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNum-1, pageSize);
+        return esMovieRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<EsMovie> getPreferRecommend(Integer pageNum, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNum-1, pageSize);
+        return esMovieRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<EsMovie> getColdRecommend(Integer pageNum, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNum-1, pageSize);
+        return esMovieRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<EsMovie> getPreferRecommend(Long id, Integer pageNum, Integer pageSize) {
+        return null;
+    }
+
+    @Override
+    public Page<EsMovie> getColdRecommend(Long id, Integer pageNum, Integer pageSize) {
+        return null;
+    }
+
+    @Override
+    public Page<EsMovie> getSearchEsMovie(Integer pageNum, Integer pageSize, Map query) {
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        return esMovieRepository.findAll(pageable);
+    }
 }

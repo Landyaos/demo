@@ -6,6 +6,7 @@ import com.utopia.demo.dto.StarringParam;
 import com.utopia.demo.entity.Genre;
 import com.utopia.demo.entity.Starring;
 import com.utopia.demo.service.StarringService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Api(value = "演员控制器")
 @RestController
 public class StarringController {
 

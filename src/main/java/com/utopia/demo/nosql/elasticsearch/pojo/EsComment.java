@@ -9,11 +9,12 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @ApiModel(value = "Index_评论")
 @Document(indexName = "comment",type = "_doc")
-public class EsComment {
+public class EsComment implements Serializable {
 
     @Id
     private Long id;

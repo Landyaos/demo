@@ -22,6 +22,7 @@ public class Genre extends AbstractEntity {
     @Column
     private String description;
 
+    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "movie_genre_relation",
             joinColumns = {@JoinColumn(name = "genre_id")},
@@ -56,7 +57,6 @@ public class Genre extends AbstractEntity {
         return movieSet;
     }
 
-    @JsonBackReference
     public void setMovieSet(Set<Movie> movieSet) {
         this.movieSet = movieSet;
     }

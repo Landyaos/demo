@@ -1,6 +1,7 @@
 package com.utopia.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModel;
 import org.apache.lucene.search.grouping.GroupFacetCollector;
 import org.hibernate.annotations.Proxy;

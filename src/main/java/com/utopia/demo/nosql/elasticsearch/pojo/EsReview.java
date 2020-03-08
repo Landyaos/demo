@@ -8,11 +8,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import java.io.Serializable;
 import java.util.Date;
 
 @ApiModel(value = "Index_影评")
 @Document(indexName = "review",type = "_doc")
-public class EsReview {
+public class EsReview implements Serializable {
     @Id
     private Long id;
 

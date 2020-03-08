@@ -32,6 +32,7 @@ public class DirectorScreenwriter extends AbstractEntity {
     @Column
     private String imdb_link;
 
+    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_director_relation",
@@ -40,6 +41,7 @@ public class DirectorScreenwriter extends AbstractEntity {
     )
     private Set<Movie> movieOfDirectorSet;
 
+    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_screenwriter_relation",
@@ -138,7 +140,7 @@ public class DirectorScreenwriter extends AbstractEntity {
     public Set<Movie> getMovieOfDirectorSet() {
         return movieOfDirectorSet;
     }
-    @JsonBackReference
+
     public void setMovieOfDirectorSet(Set<Movie> directorSet) {
         this.movieOfDirectorSet = directorSet;
     }
@@ -146,7 +148,7 @@ public class DirectorScreenwriter extends AbstractEntity {
     public Set<Movie> getMovieOfScreenwriterSet() {
         return movieOfScreenwriterSet;
     }
-    @JsonBackReference
+
     public void setMovieOfScreenwriterSet(Set<Movie> screenwriterSet) {
         this.movieOfScreenwriterSet = screenwriterSet;
     }

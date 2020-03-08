@@ -1,6 +1,8 @@
 package com.utopia.demo.nosql.elasticsearch.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.utopia.demo.entity.DirectorScreenwriter;
 import com.utopia.demo.entity.Genre;
 import com.utopia.demo.entity.Starring;
@@ -10,12 +12,13 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @ApiModel(value = "Index_电影")
 @Document(indexName = "movie", type = "_doc")
-public class EsMovie {
+public class EsMovie implements Serializable {
     @Id
     private Long id;
 
@@ -66,62 +69,19 @@ public class EsMovie {
     private String rottenTomatoes_link;
 
     @Field(type = FieldType.Object)
-    private Set<DirectorScreenwriter> directorSet;
+    private Set<EsDirectorScreenwriter> directorSet;
 
     @Field(type = FieldType.Object)
-    private Set<DirectorScreenwriter> screenwriterSet;
+    private Set<EsDirectorScreenwriter> screenwriterSet;
 
     @Field(type = FieldType.Object)
-    private Set<Starring> starringSet;
+    private Set<EsStarring> starringSet;
 
     @Field(type = FieldType.Object)
-    private Set<Genre> genreSet;
+    private Set<EsGenre> genreSet;
 
     public EsMovie() {
 
-    }
-
-    public EsMovie(String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, Float rate, Long votes, String rate_weight, String imdb_link, String douban_link, String rottenTomatoes_link, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
-        this.name = name;
-        this.foreign_name = foreign_name;
-        this.length = length;
-        this.language = language;
-        this.area = area;
-        this.release_date = release_date;
-        this.box_office = box_office;
-        this.cover_url = cover_url;
-        this.rate = rate;
-        this.votes = votes;
-        this.rate_weight = rate_weight;
-        this.imdb_link = imdb_link;
-        this.douban_link = douban_link;
-        this.rottenTomatoes_link = rottenTomatoes_link;
-        this.directorSet = directorSet;
-        this.screenwriterSet = screenwriterSet;
-        this.starringSet = starringSet;
-        this.genreSet = genreSet;
-    }
-
-    public EsMovie(Long id, String name, String foreign_name, Integer length, String language, String area, Date release_date, Float box_office, String cover_url, Float rate, Long votes, String rate_weight, String imdb_link, String douban_link, String rottenTomatoes_link, Set<DirectorScreenwriter> directorSet, Set<DirectorScreenwriter> screenwriterSet, Set<Starring> starringSet, Set<Genre> genreSet) {
-        this.id = id;
-        this.name = name;
-        this.foreign_name = foreign_name;
-        this.length = length;
-        this.language = language;
-        this.area = area;
-        this.release_date = release_date;
-        this.box_office = box_office;
-        this.cover_url = cover_url;
-        this.rate = rate;
-        this.votes = votes;
-        this.rate_weight = rate_weight;
-        this.imdb_link = imdb_link;
-        this.douban_link = douban_link;
-        this.rottenTomatoes_link = rottenTomatoes_link;
-        this.directorSet = directorSet;
-        this.screenwriterSet = screenwriterSet;
-        this.starringSet = starringSet;
-        this.genreSet = genreSet;
     }
 
     @Override
@@ -130,15 +90,16 @@ public class EsMovie {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", foreign_name='" + foreign_name + '\'' +
+                ", profile='" + profile + '\'' +
                 ", length=" + length +
                 ", language='" + language + '\'' +
                 ", area='" + area + '\'' +
-                ", release_date='" + release_date + '\'' +
+                ", release_date=" + release_date +
                 ", box_office=" + box_office +
                 ", cover_url='" + cover_url + '\'' +
                 ", rate=" + rate +
                 ", votes=" + votes +
-                ", weight='" + rate_weight + '\'' +
+                ", rate_weight='" + rate_weight + '\'' +
                 ", imdb_link='" + imdb_link + '\'' +
                 ", douban_link='" + douban_link + '\'' +
                 ", rottenTomatoes_link='" + rottenTomatoes_link + '\'' +
@@ -277,35 +238,35 @@ public class EsMovie {
         this.rottenTomatoes_link = rottenTomatoes_link;
     }
 
-    public Set<DirectorScreenwriter> getDirectorSet() {
+    public Set<EsDirectorScreenwriter> getDirectorSet() {
         return directorSet;
     }
 
-    public void setDirectorSet(Set<DirectorScreenwriter> directorSet) {
+    public void setDirectorSet(Set<EsDirectorScreenwriter> directorSet) {
         this.directorSet = directorSet;
     }
 
-    public Set<DirectorScreenwriter> getScreenwriterSet() {
+    public Set<EsDirectorScreenwriter> getScreenwriterSet() {
         return screenwriterSet;
     }
 
-    public void setScreenwriterSet(Set<DirectorScreenwriter> screenwriterSet) {
+    public void setScreenwriterSet(Set<EsDirectorScreenwriter> screenwriterSet) {
         this.screenwriterSet = screenwriterSet;
     }
 
-    public Set<Starring> getStarringSet() {
+    public Set<EsStarring> getStarringSet() {
         return starringSet;
     }
 
-    public void setStarringSet(Set<Starring> starringSet) {
+    public void setStarringSet(Set<EsStarring> starringSet) {
         this.starringSet = starringSet;
     }
 
-    public Set<Genre> getGenreSet() {
+    public Set<EsGenre> getGenreSet() {
         return genreSet;
     }
 
-    public void setGenreSet(Set<Genre> genreSet) {
+    public void setGenreSet(Set<EsGenre> genreSet) {
         this.genreSet = genreSet;
     }
 }
