@@ -20,10 +20,10 @@ public class EsComment implements Serializable {
     private Long id;
 
     @Field(type = FieldType.Object)
-    private EsMovieParam esMovieParam;
+    private EsUserParam user;
 
     @Field(type = FieldType.Object)
-    private EsUserParam esUserParam;
+    private EsMovieParam movie;
 
     @Field(type = FieldType.Text)
     private String content;
@@ -38,12 +38,15 @@ public class EsComment implements Serializable {
     @Field(type = FieldType.Long)
     private Long votes;
 
+    public EsComment() {
+    }
+
     @Override
     public String toString() {
         return "EsComment{" +
                 "id=" + id +
-                ", esMovieParam=" + esMovieParam +
-                ", userParam=" + esUserParam +
+                ", user=" + user +
+                ", movie=" + movie +
                 ", content='" + content + '\'' +
                 ", date=" + date +
                 ", rate=" + rate +
@@ -59,20 +62,20 @@ public class EsComment implements Serializable {
         this.id = id;
     }
 
-    public EsMovieParam getEsMovieParam() {
-        return esMovieParam;
+    public EsUserParam getUser() {
+        return user;
     }
 
-    public void setEsMovieParam(EsMovieParam esMovieParam) {
-        this.esMovieParam = esMovieParam;
+    public void setUser(EsUserParam user) {
+        this.user = user;
     }
 
-    public EsUserParam getEsUserParam() {
-        return esUserParam;
+    public EsMovieParam getMovie() {
+        return movie;
     }
 
-    public void setEsUserParam(EsUserParam esUserParam) {
-        this.esUserParam = esUserParam;
+    public void setMovie(EsMovieParam movie) {
+        this.movie = movie;
     }
 
     public String getContent() {

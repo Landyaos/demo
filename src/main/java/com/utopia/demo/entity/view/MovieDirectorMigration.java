@@ -11,7 +11,7 @@ class MovieDirectorKey implements Serializable {
     Long director_id;
 }
 @Entity
-@Table(name = "movie_director")
+@Table(name = "movie_director_migration")
 @IdClass(MovieDirectorKey.class)
 public class MovieDirectorMigration {
     @Id
@@ -21,6 +21,15 @@ public class MovieDirectorMigration {
 
     @Column
     private Integer ranking;
+
+    @Override
+    public String toString() {
+        return "MovieDirectorMigration{" +
+                "movie_id=" + movie_id +
+                ", director_id=" + director_id +
+                ", ranking=" + ranking +
+                '}';
+    }
 
     public Integer getRanking() {
         return ranking;

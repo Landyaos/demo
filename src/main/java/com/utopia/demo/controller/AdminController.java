@@ -245,8 +245,8 @@ public class AdminController {
                 BeanUtils.copyProperties(comment.getUser(), esUserParam);
                 EsMovieParam esMovieParam = new EsMovieParam();
                 BeanUtils.copyProperties(comment.getMovie(),esMovieParam);
-                esComment.setEsUserParam(esUserParam);
-                esComment.setEsMovieParam(esMovieParam);
+                esComment.setUser(esUserParam);
+                esComment.setMovie(esMovieParam);
                 esCommentRepository.save(esComment);
             }
 
@@ -258,8 +258,8 @@ public class AdminController {
                 BeanUtils.copyProperties(review.getUser(), esUserParam);
                 EsMovieParam esMovieParam = new EsMovieParam();
                 BeanUtils.copyProperties(review.getMovie(),esMovieParam);
-                esReview.setEsUserParam(esUserParam);
-                esReview.setEsMovieParam(esMovieParam);
+                esReview.setUser(esUserParam);
+                esReview.setMovie(esMovieParam);
                 esReviewRepository.save(esReview);
             }
 

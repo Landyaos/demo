@@ -19,10 +19,10 @@ public class EsReview implements Serializable {
     private Long id;
 
     @Field(type = FieldType.Object)
-    private EsMovieParam esMovieParam;
+    private EsUserParam user;
 
     @Field(type = FieldType.Object)
-    private EsUserParam esUserParam;
+    private EsMovieParam movie;
 
     @Field(type = FieldType.Text)
     private String title;
@@ -41,12 +41,15 @@ public class EsReview implements Serializable {
     @Field(type = FieldType.Long)
     private Long votes;
 
+    public EsReview() {
+    }
+
     @Override
     public String toString() {
         return "EsReview{" +
                 "id=" + id +
-                ", esMovieParam=" + esMovieParam +
-                ", userParam=" + esUserParam +
+                ", user=" + user +
+                ", movie=" + movie +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", date=" + date +
@@ -56,7 +59,6 @@ public class EsReview implements Serializable {
     }
 
     public Long getId() {
-
         return id;
     }
 
@@ -64,20 +66,20 @@ public class EsReview implements Serializable {
         this.id = id;
     }
 
-    public EsMovieParam getEsMovieParam() {
-        return esMovieParam;
+    public EsUserParam getUser() {
+        return user;
     }
 
-    public void setEsMovieParam(EsMovieParam esMovieParam) {
-        this.esMovieParam = esMovieParam;
+    public void setUser(EsUserParam user) {
+        this.user = user;
     }
 
-    public EsUserParam getEsUserParam() {
-        return esUserParam;
+    public EsMovieParam getMovie() {
+        return movie;
     }
 
-    public void setEsUserParam(EsUserParam esUserParam) {
-        this.esUserParam = esUserParam;
+    public void setMovie(EsMovieParam movie) {
+        this.movie = movie;
     }
 
     public String getTitle() {

@@ -97,13 +97,6 @@ from `demo`.`movie_director_relation` `mdr`
          join `recommendsystem`.`director_screenwriter` `ds`
 where ((0 <> locate((('%' + `mdr`.`movie_id`) + '%'), `m`.`douban_link`)) and (`mdr`.`url` = `ds`.`douban_link`));
 
-
-
-
-
-
-
-
 -- 创建 comment_migration
 create view comment_migration as
 select u.id as user, m.id as movie, c.content, c.date, c.rate, c.votes

@@ -1,8 +1,6 @@
 package com.utopia.demo.nosql.elasticsearch.pojo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.utopia.demo.entity.DirectorScreenwriter;
 import com.utopia.demo.entity.Genre;
 import com.utopia.demo.entity.Starring;
@@ -69,16 +67,16 @@ public class EsMovie implements Serializable {
     private String rottenTomatoes_link;
 
     @Field(type = FieldType.Object)
-    private Set<EsDirectorScreenwriter> directorSet;
+    private Set<DirectorScreenwriter> directorSet;
 
     @Field(type = FieldType.Object)
-    private Set<EsDirectorScreenwriter> screenwriterSet;
+    private Set<DirectorScreenwriter> screenwriterSet;
 
     @Field(type = FieldType.Object)
-    private Set<EsStarring> starringSet;
+    private Set<Starring> starringSet;
 
     @Field(type = FieldType.Object)
-    private Set<EsGenre> genreSet;
+    private Set<Genre> genreSet;
 
     public EsMovie() {
 
@@ -238,35 +236,35 @@ public class EsMovie implements Serializable {
         this.rottenTomatoes_link = rottenTomatoes_link;
     }
 
-    public Set<EsDirectorScreenwriter> getDirectorSet() {
+    public Set<DirectorScreenwriter> getDirectorSet() {
         return directorSet;
     }
 
-    public void setDirectorSet(Set<EsDirectorScreenwriter> directorSet) {
+    public void setDirectorSet(Set<DirectorScreenwriter> directorSet) {
         this.directorSet = directorSet;
     }
 
-    public Set<EsDirectorScreenwriter> getScreenwriterSet() {
+    public Set<DirectorScreenwriter> getScreenwriterSet() {
         return screenwriterSet;
     }
 
-    public void setScreenwriterSet(Set<EsDirectorScreenwriter> screenwriterSet) {
+    public void setScreenwriterSet(Set<DirectorScreenwriter> screenwriterSet) {
         this.screenwriterSet = screenwriterSet;
     }
 
-    public Set<EsStarring> getStarringSet() {
+    public Set<Starring> getStarringSet() {
         return starringSet;
     }
 
-    public void setStarringSet(Set<EsStarring> starringSet) {
+    public void setStarringSet(Set<Starring> starringSet) {
         this.starringSet = starringSet;
     }
 
-    public Set<EsGenre> getGenreSet() {
+    public Set<Genre> getGenreSet() {
         return genreSet;
     }
 
-    public void setGenreSet(Set<EsGenre> genreSet) {
+    public void setGenreSet(Set<Genre> genreSet) {
         this.genreSet = genreSet;
     }
 }
