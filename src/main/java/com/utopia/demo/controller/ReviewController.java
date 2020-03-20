@@ -23,8 +23,8 @@ public class ReviewController {
     @GetMapping(value = "/review/{id}")
     public CommonResult<Map<String,Object>> getReview(
             @PathVariable(value = "id") Long id,
-            @RequestParam(value = "pageNum") Integer pageNum,
-            @RequestParam(value = "pageSize") Integer pageSize
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Map<String, Object> map =reviewService.getAllByMovieIdJson(id, pageNum, pageSize);
         if ((int) map.get("status") == 200) {

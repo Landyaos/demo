@@ -1,7 +1,5 @@
 package com.utopia.demo.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
 import com.utopia.demo.common.CommonResult;
 import com.utopia.demo.service.CommentService;
 import io.swagger.annotations.Api;
@@ -23,16 +21,17 @@ public class CommentController {
 
     @ApiOperation(value = "获取指定id电影评论", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/comment/{id}")
-    public CommonResult getComment(
+    public CommonResult<Map<String, Object>> getComment(
             @PathVariable(value = "id") Long id,
-            @RequestParam(value = "pageNum") Integer pageNum,
-            @RequestParam(value = "pageSize") Integer pageSize
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
     ) {
-        Map<String,Object> map = commentService.getAllByMovieIdJson(id, pageNum, pageSize);
+        Map<String, Object> map = commentService.getAllByMovieIdJson(id, pageNum, pageSize);
         if ((int) map.get("status") == 200) {
             return CommonResult.success(map, "获取电影评论成功");
         } else {
             return CommonResult.failed((String) map.get("errMsg"));
-        }    }
+        }
+    }
 
 }

@@ -50,18 +50,19 @@ public class UserAdminController {
 
     @ApiOperation(value = "用户登录", httpMethod = "POST", response = CommonResult.class)
     @PostMapping(value = "/login")
-    public CommonResult login(@RequestBody LoginParam loginParam) {
+    public CommonResult<Map<String, String>> login(@RequestBody LoginParam loginParam) {
 //        if (!captchaService.verifyCaptcha(username, captcha)) {
 //            return CommonResult.failed("验证码错误");
 //        }
-        String token = userService.login(loginParam.getUsername(), loginParam.getPassword());
-        if (token == null) {
+        Map<String, String> map = userService.login(loginParam.getUsername(), loginParam.getPassword());
+        if (map.get("token") == null) {
             return CommonResult.validateFailed("username or password is wrong");
         }
         Map<String, String> tokenMap = new HashMap<>();
-        tokenMap.put("token", token);
+        tokenMap.put("token", map.get("token"));
         tokenMap.put("tokenHead", tokenHead);
-        tokenMap.put(tokenHeader,tokenHead+token);
+        tokenMap.put(tokenHeader, tokenHead + map.get("token"));
+        tokenMap.put("icon", map.get("icon"));
         return CommonResult.success(tokenMap);
     }
 
@@ -88,10 +89,19 @@ public class UserAdminController {
         }
         return CommonResult.success(user,"获取用户信息成功.");
     }
+    @ApiOperation(value = "获取单个用户信息ByUsername", httpMethod = "GET", response = CommonResult.class)
+    @GetMapping(value = "/user/_username/{username}")
+    public CommonResult getUserDetail(@PathVariable("username") String username) {
+        User user = userService.getUserByUsername(username);
+        if (user == null) {
+            return CommonResult.failed("用户名不存在.");
+        }
+        return CommonResult.success(user,"获取用户信息成功.");
+    }
 
     @ApiOperation(value = "修改用户信息", httpMethod = "PUT", response = CommonResult.class)
     @PutMapping(value = "/user/{id}")
-    public CommonResult putUserDetail(
+    public CommonResult<User> putUserDetail(
             @PathVariable(value = "id") long id,
             @RequestBody UserParam userParam) {
         User user = userService.updateUser(userParam);

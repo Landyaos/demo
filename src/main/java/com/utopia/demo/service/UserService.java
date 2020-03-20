@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -24,7 +26,7 @@ public interface UserService {
 
     User register(UserParam user);
 
-    String login(String username, String password);
+    Map<String, String> login(String username, String password);
 
     String refreshToken(String token);
 

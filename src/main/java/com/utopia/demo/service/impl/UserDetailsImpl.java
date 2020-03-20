@@ -25,6 +25,10 @@ public class UserDetailsImpl implements UserDetails {
         this.permission_list = permission_list;
     }
 
+    public String getIcon() {
+        return user.getIcon();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("TEST"));
@@ -39,6 +43,8 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
+
+
 
     @Override
     public boolean isAccountNonExpired() {

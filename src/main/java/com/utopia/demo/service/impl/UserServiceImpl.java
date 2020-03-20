@@ -18,7 +18,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -86,8 +88,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(String username, String password) {
-        String token = null;
+    public Map<String, String> login(String username, String password) {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", null);
         try {
             UserDetailsImpl userDetails = loadUserByUsername(username);
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
@@ -95,13 +98,12 @@ public class UserServiceImpl implements UserService {
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            token = jwtTokenUtil.generateToken(userDetails);
-            System.out.println("login\nusername: " + username + " generate token " + token);
-
+            map.put("token", jwtTokenUtil.generateToken(userDetails));
+            map.put("icon", userDetails.getIcon());
         } catch (AuthenticationException e) {
             System.out.println("login error" + e);
         }
-        return token;
+        return map;
     }
 
     @Override

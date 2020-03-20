@@ -8,7 +8,6 @@ import com.utopia.demo.entity.Movie;
 import com.utopia.demo.service.MovieService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.elasticsearch.common.recycler.Recycler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class MovieController {
 
     @ApiOperation(value = "获取所有电影信息", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/movie/_all")
-    public CommonResult getStarringAll(
+    public CommonResult<Page<Movie>> getStarringAll(
             @RequestParam(value = "pageNum") Integer pageNum,
             @RequestParam(value = "pageSize") Integer pageSize) {
         Page<Movie> moviePage = movieService.getAllByPageFromSql(pageNum, pageSize);
@@ -33,7 +32,7 @@ public class MovieController {
 
     @ApiOperation(value = "搜索电影", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/movie/_search")
-    public CommonResult getStarringBySearch(
+    public CommonResult<Page<Movie>> getStarringBySearch(
             @RequestParam(value = "query") Map<String, Object> query,
             @RequestParam(value = "pageNum") Integer pageNum,
             @RequestParam(value = "pageSize") Integer pageSize) {
@@ -43,7 +42,7 @@ public class MovieController {
 
     @ApiOperation(value = "获取电影byID", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/movie/{id}")
-    public CommonResult getStarringById(
+    public CommonResult<Movie> getStarringById(
             @PathVariable(value = "id") Integer id) {
         Movie movie = movieService.getOneByIdFromSql(id);
         return CommonResult.success(movie, "获取电影成功");
