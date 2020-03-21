@@ -22,7 +22,7 @@ public class DirectorScreenwriterServiceImpl implements DirectorScreenwriterServ
     private DirectorScreenwriterRepository directorScreenwriterRepository;
 
     @Override
-    public Page<DirectorScreenwriter> getAll(Integer pageNum, Integer pageSize) {
+    public Page<DirectorScreenwriter> getAllDirectorScreenwriter(Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         return directorScreenwriterRepository.findAll(pageable);
     }
@@ -33,12 +33,18 @@ public class DirectorScreenwriterServiceImpl implements DirectorScreenwriterServ
     }
 
     @Override
-    public DirectorScreenwriter getById(Integer id) {
+    public DirectorScreenwriter getOneById(Integer id) {
         return directorScreenwriterRepository.findById(id);
     }
 
     @Override
-    public DirectorScreenwriter add(DirectorScreenwriterParam directorScreenwriterParam) {
+    public DirectorScreenwriter getOneByName(String name) {
+        return directorScreenwriterRepository.findByName(name);
+
+    }
+
+    @Override
+    public DirectorScreenwriter addDirectorScreenwriter(DirectorScreenwriterParam directorScreenwriterParam) {
         if (directorScreenwriterRepository.findById(directorScreenwriterParam.getId()).orElse(null) != null) {
             return null;
         }
@@ -49,7 +55,7 @@ public class DirectorScreenwriterServiceImpl implements DirectorScreenwriterServ
     }
 
     @Override
-    public DirectorScreenwriter update(DirectorScreenwriterParam directorScreenwriterParam) {
+    public DirectorScreenwriter updateDirectorScreenwriter(DirectorScreenwriterParam directorScreenwriterParam) {
         DirectorScreenwriter directorScreenwriter = directorScreenwriterRepository.findById(directorScreenwriterParam.getId()).orElse(null);
         if (directorScreenwriter == null) {
             return null;
@@ -60,7 +66,7 @@ public class DirectorScreenwriterServiceImpl implements DirectorScreenwriterServ
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public boolean deleteOneById(long id) {
         return false;
     }
 }

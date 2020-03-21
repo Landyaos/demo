@@ -39,13 +39,27 @@ public class StarringController {
         Page<Starring> starringPage = starringService.getBySearch(query, pageNum, pageSize);
         return CommonResult.success(starringPage, "获取演员成功");
     }
-    @ApiOperation(value = "获取演员byID", httpMethod = "GET", response = CommonResult.class)
+
+    @ApiOperation(value = "获取演员byId", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/starring/{id}")
     public CommonResult getStarringById(
             @PathVariable(value = "id") Integer id) {
         Starring starring = starringService.getById(id);
         return CommonResult.success(starring, "获取演员成功");
     }
+
+    @ApiOperation(value = "获取演员byName", httpMethod = "GET", response = CommonResult.class)
+    @GetMapping(value = "/starring/_name/{name}")
+    public CommonResult getStarringByName(
+            @PathVariable(value = "name") String name) {
+        Starring starring = starringService.getOneByName(name);
+        if (starring != null) {
+            return CommonResult.success(starring, "获取演员成功");
+        } else {
+            return CommonResult.failed("获取演员失败");
+        }
+    }
+
 
     @ApiOperation(value = "增加演员", httpMethod = "POST", response = CommonResult.class)
     @PostMapping(value = "/starring")

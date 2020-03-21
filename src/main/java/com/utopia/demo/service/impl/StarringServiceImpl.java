@@ -38,6 +38,11 @@ public class StarringServiceImpl implements StarringService {
     }
 
     @Override
+    public Starring getOneByName(String name) {
+        return starringRepository.findByName(name);
+    }
+
+    @Override
     public Starring add(StarringParam starringParam) {
         Starring starring = new Starring();
         BeanUtils.copyProperties(starringParam, starring);

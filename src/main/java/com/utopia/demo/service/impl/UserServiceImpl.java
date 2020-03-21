@@ -2,6 +2,7 @@ package com.utopia.demo.service.impl;
 
 import com.utopia.demo.component.JwtTokenUtil;
 import com.utopia.demo.dto.UserParam;
+import com.utopia.demo.entity.Role;
 import com.utopia.demo.entity.User;
 import com.utopia.demo.repository.UserRepository;
 import com.utopia.demo.service.UserService;
@@ -43,6 +44,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User putUserRole(Long user_id, Long role_id) {
+        User user = userRepository.findById(user_id).orElse(null);
+        if (user != null) {
+            user.setRole(new Role(role_id));
+            userRepository.save(user);
+            return user;
+        }
+        return null;
     }
 
     @Override

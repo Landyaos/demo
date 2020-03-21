@@ -28,29 +28,42 @@ public class GenreController {
 
     @ApiOperation(value = "搜索类型", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/genre/_search")
-    public CommonResult getGenreByName(
+    public CommonResult getGenreBySearch(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "pageNum") Integer pageNum,
             @RequestParam(value = "pageSize") Integer pageSize) {
         Page<Genre> userPage = genreService.getGenreByName(name, pageNum, pageSize);
         return CommonResult.success(userPage, "获取类型成功");
     }
+
     @ApiOperation(value = "获取类型byID", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/genre/{id}")
-    public CommonResult getGenreByName(
+    public CommonResult getGenreById(
             @PathVariable(value = "id") Integer id) {
         Genre genre = genreService.getGenreById(id);
         return CommonResult.success(genre, "获取类型成功");
     }
 
+    @ApiOperation(value = "获取类型byID", httpMethod = "GET", response = CommonResult.class)
+    @GetMapping(value = "/genre/_name/{name}")
+    public CommonResult getGenreByName(
+            @PathVariable(value = "name") String name) {
+        Genre genre = genreService.getGenreByName(name);
+        if (genre != null) {
+            return CommonResult.success(genre, "获取类型成功");
+        } else {
+            return CommonResult.failed("获取类型失败");
+        }
+    }
+
     @ApiOperation(value = "增加类型", httpMethod = "POST", response = CommonResult.class)
     @PostMapping(value = "/genre")
     public CommonResult addGenre(@RequestBody GenreParam genreParam) {
-        Genre genre_new = genreService.add(genreParam);
+        Genre genre_new = genreService.addGenre(genreParam);
         if (genre_new == null) {
             return CommonResult.failed("类型已存在");
         }
-        return CommonResult.success(genre_new,"添加类型成功");
+        return CommonResult.success(genre_new, "添加类型成功");
     }
 
     @ApiOperation(value = "删除类型", httpMethod = "DELETE", response = CommonResult.class)

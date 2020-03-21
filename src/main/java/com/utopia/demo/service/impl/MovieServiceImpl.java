@@ -45,6 +45,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public Movie getOneByNameFromSql(String name) {
+        return movieRepository.findByName(name);
+    }
+
+    @Override
     public Movie putToSql(MovieParam movieParam) {
         Movie movie = new Movie();
         BeanUtils.copyProperties(movieParam, movie);

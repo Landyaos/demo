@@ -16,6 +16,8 @@ public interface MovieService {
 
     Movie getOneByIdFromSql(Integer id);
 
+    Movie getOneByNameFromSql(String name);
+
     Movie putToSql(MovieParam movieParam);
 
     boolean deleteByIdFromSql(long id);

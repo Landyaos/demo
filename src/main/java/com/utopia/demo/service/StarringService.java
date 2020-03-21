@@ -14,6 +14,8 @@ public interface StarringService {
 
     Starring getById(Integer id);
 
+    Starring getOneByName(String name);
+
     Starring add(StarringParam starringParam);
 
     boolean deleteById(long id);

@@ -23,7 +23,7 @@ public class MovieController {
 
     @ApiOperation(value = "获取所有电影信息", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/movie/_all")
-    public CommonResult<Page<Movie>> getStarringAll(
+    public CommonResult<Page<Movie>> getAllMovie(
             @RequestParam(value = "pageNum") Integer pageNum,
             @RequestParam(value = "pageSize") Integer pageSize) {
         Page<Movie> moviePage = movieService.getAllByPageFromSql(pageNum, pageSize);
@@ -32,7 +32,7 @@ public class MovieController {
 
     @ApiOperation(value = "搜索电影", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/movie/_search")
-    public CommonResult<Page<Movie>> getStarringBySearch(
+    public CommonResult<Page<Movie>> getMovieBySearch(
             @RequestParam(value = "query") Map<String, Object> query,
             @RequestParam(value = "pageNum") Integer pageNum,
             @RequestParam(value = "pageSize") Integer pageSize) {
@@ -42,15 +42,27 @@ public class MovieController {
 
     @ApiOperation(value = "获取电影byID", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/movie/{id}")
-    public CommonResult<Movie> getStarringById(
+    public CommonResult<Movie> getMovieById(
             @PathVariable(value = "id") Integer id) {
         Movie movie = movieService.getOneByIdFromSql(id);
         return CommonResult.success(movie, "获取电影成功");
     }
 
+    @ApiOperation(value = "获取电影byName", httpMethod = "GET", response = CommonResult.class)
+    @GetMapping(value = "/movie/_name/{name}")
+    public CommonResult<Movie> getMovieByName(
+            @PathVariable(value = "name") String name) {
+        Movie movie = movieService.getOneByNameFromSql(name);
+        if (movie != null) {
+            return CommonResult.success(movie, "获取电影成功");
+        } else {
+            return CommonResult.failed("获取电影失败");
+        }
+    }
+
     @ApiOperation(value = "增加电影", httpMethod = "POST", response = CommonResult.class)
     @PostMapping(value = "/movie")
-    public CommonResult addStarring(@RequestBody MovieParam movieParam) {
+    public CommonResult addMovie(@RequestBody MovieParam movieParam) {
         Movie movie = movieService.putToSql(movieParam);
         if (movie == null) {
             return CommonResult.failed("电影已存在");
@@ -60,7 +72,7 @@ public class MovieController {
 
     @ApiOperation(value = "删除电影", httpMethod = "DELETE", response = CommonResult.class)
     @DeleteMapping(value = "/movie/{id}")
-    public CommonResult deleteStarringById(
+    public CommonResult deleteMovieById(
             @PathVariable(value = "id") long id
     ) {
         if (movieService.deleteByIdFromSql(id)) {
@@ -71,7 +83,7 @@ public class MovieController {
 
     @ApiOperation(value = "修改电影信息", httpMethod = "PUT", response = CommonResult.class)
     @PutMapping(value = "/movie/{id}")
-    public CommonResult putStarringDetail(
+    public CommonResult putMovieDetail(
             @PathVariable(value = "id") long id,
             @RequestBody MovieParam movieParam) {
         System.out.println(movieParam);

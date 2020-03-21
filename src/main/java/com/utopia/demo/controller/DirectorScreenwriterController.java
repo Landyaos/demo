@@ -2,9 +2,7 @@ package com.utopia.demo.controller;
 
 import com.utopia.demo.common.CommonResult;
 import com.utopia.demo.dto.DirectorScreenwriterParam;
-import com.utopia.demo.dto.StarringParam;
 import com.utopia.demo.entity.DirectorScreenwriter;
-import com.utopia.demo.entity.Starring;
 import com.utopia.demo.service.DirectorScreenwriterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +23,7 @@ public class DirectorScreenwriterController {
     public CommonResult getDirectorScreenwriterAll(
             @RequestParam(value = "pageNum") Integer pageNum,
             @RequestParam(value = "pageSize") Integer pageSize) {
-        Page<DirectorScreenwriter> directorScreenwriterPage = directorScreenwriterService.getAll(pageNum, pageSize);
+        Page<DirectorScreenwriter> directorScreenwriterPage = directorScreenwriterService.getAllDirectorScreenwriter(pageNum, pageSize);
         return CommonResult.success(directorScreenwriterPage, "获取导演编剧成功");
     }
 
@@ -38,18 +36,31 @@ public class DirectorScreenwriterController {
         Page<DirectorScreenwriter> directorScreenwriterPage = directorScreenwriterService.getBySearch(query, pageNum, pageSize);
         return CommonResult.success(directorScreenwriterPage, "获取导演编剧成功");
     }
+
     @ApiOperation(value = "获取导演编剧byID", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/directorScreenwriter/{id}")
     public CommonResult getDirectorAndScreenwriterById(
             @PathVariable(value = "id") Integer id) {
-        DirectorScreenwriter directorScreenwriter = directorScreenwriterService.getById(id);
+        DirectorScreenwriter directorScreenwriter = directorScreenwriterService.getOneById(id);
         return CommonResult.success(directorScreenwriter, "获取导演编剧成功");
+    }
+
+    @ApiOperation(value = "获取导演编剧byName", httpMethod = "GET", response = CommonResult.class)
+    @GetMapping(value = "/directorScreenwriter/_name/{name}")
+    public CommonResult getDirectorAndScreenwriterByName(
+            @PathVariable(value = "name") String name) {
+        DirectorScreenwriter directorScreenwriter = directorScreenwriterService.getOneByName(name);
+        if (directorScreenwriter != null) {
+            return CommonResult.success(directorScreenwriter, "获取导演编剧成功");
+        } else {
+            return CommonResult.failed("获取导演编剧失败");
+        }
     }
 
     @ApiOperation(value = "增加导演编剧", httpMethod = "POST", response = CommonResult.class)
     @PostMapping(value = "/directorScreenwriter")
     public CommonResult addDirectorAndScreenwriter(@RequestBody DirectorScreenwriterParam directorScreenwriterParam) {
-        DirectorScreenwriter directorScreenwriter = directorScreenwriterService.add(directorScreenwriterParam);
+        DirectorScreenwriter directorScreenwriter = directorScreenwriterService.addDirectorScreenwriter(directorScreenwriterParam);
         if (directorScreenwriterParam == null) {
             return CommonResult.failed("导演编剧已存在");
         }
@@ -61,7 +72,7 @@ public class DirectorScreenwriterController {
     public CommonResult deleteDirectorScreenwriterById(
             @PathVariable(value = "id") long id
     ) {
-        if (directorScreenwriterService.deleteById(id)) {
+        if (directorScreenwriterService.deleteOneById(id)) {
             return CommonResult.success("删除导演编剧成功");
         }
         return CommonResult.failed("删除导演编剧失败");
@@ -72,7 +83,7 @@ public class DirectorScreenwriterController {
     public CommonResult putDirectorScreenwriterDetail(
             @PathVariable(value = "id") long id,
             @RequestBody DirectorScreenwriterParam directorScreenwriterParam) {
-        DirectorScreenwriter directorScreenwriter = directorScreenwriterService.update(directorScreenwriterParam);
+        DirectorScreenwriter directorScreenwriter = directorScreenwriterService.updateDirectorScreenwriter(directorScreenwriterParam);
         if (directorScreenwriter == null || id != directorScreenwriterParam.getId()) {
             return CommonResult.failed("导演编剧已存在，更新失败");
         }

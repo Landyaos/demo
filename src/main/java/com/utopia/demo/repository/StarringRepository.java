@@ -8,4 +8,6 @@ public interface StarringRepository extends JpaRepository<Starring, Long> {
 
     Starring findById(long id);
 
+    Starring findByName(String name);
+
 }

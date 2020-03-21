@@ -39,7 +39,12 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre add(GenreParam genreParam) {
+    public Genre getGenreByName(String name) {
+        return genreRepository.findByName(name);
+    }
+
+    @Override
+    public Genre addGenre(GenreParam genreParam) {
         Genre genre_new = new Genre();
         BeanUtils.copyProperties(genreParam, genre_new);
         genreRepository.save(genre_new);

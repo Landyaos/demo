@@ -16,6 +16,8 @@ import com.utopia.demo.nosql.elasticsearch.repository.EsReviewRepository;
 import com.utopia.demo.repository.*;
 import com.utopia.demo.repository.migration.*;
 import com.utopia.demo.service.GenreService;
+import com.utopia.demo.service.PermissionService;
+import com.utopia.demo.service.RoleService;
 import com.utopia.demo.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,6 +77,10 @@ public class AdminController {
     @Autowired
     private EsMovieRepository esMovieRepository;
 
+    @Autowired
+    private PermissionRepository permissionRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @ApiOperation(value = "获取所有用户信息", httpMethod = "GET", response = CommonResult.class)
     @GetMapping(value = "/user/_all")
@@ -83,6 +90,20 @@ public class AdminController {
 
         Page<User> userPage = userService.getAllUser(pageNum, pageSize);
         return CommonResult.success(userPage, "获取用户成功");
+    }
+
+    @ApiOperation(value = "更改用户角色", httpMethod = "Put", response = CommonResult.class)
+    @PutMapping(value = "/user/{user_id}/role/{role_id}")
+    public CommonResult putUserRole(
+            @PathVariable(value = "user_id") Long user_id,
+            @PathVariable(value = "role_id") Long role_id
+    ) {
+        User user = userService.putUserRole(user_id, role_id);
+        if (user != null) {
+            return CommonResult.success("更新用户角色成功");
+        } else {
+            return CommonResult.failed("更新用户角色失败");
+        }
     }
 
     @ApiOperation(value = "删除用户", httpMethod = "DELETE", response = CommonResult.class)
@@ -268,4 +289,72 @@ public class AdminController {
             return CommonResult.failed(e.getMessage());
         }
     }
+
+    @ApiOperation(value = "初始化角色&权限", httpMethod = "POST", response = CommonResult.class)
+    @PostMapping(value = "/admin/migration/role/permission")
+    public CommonResult roleAndPermissionMigration() {
+
+        try {
+            List<Permission> permissionList = new ArrayList<>();
+            permissionList.add(new Permission("用户权限", "涉及用户资源相关的", "/movie"));
+            permissionList.add(new Permission("电影资源访问权限", "涉及电影资源访问权限", "/movie"));
+            permissionList.add(new Permission("演员资源访问权限", "涉及演员资源访问权限", "/starring"));
+            permissionList.add(new Permission("导编资源访问权限", "涉及导编资源访问权限", "/directorScreenwriter"));
+            permissionList.add(new Permission("类型资源访问权限", "涉及类型资源访问权限", "/genre"));
+            permissionList.add(new Permission("管理权限", "涉及管理权限", "/admin"));
+            permissionList.add(new Permission("登录权限", "涉及登录权限", "/login"));
+            permissionList.add(new Permission("Elasticsearch权限", "涉及Elasticsearch权限", "/es"));
+            permissionList.add(new Permission("VIP权限", "涉及VIP权限", "/vip"));
+            for (Permission permission : permissionList) {
+
+                permissionRepository.save(permission);
+            }
+
+            Set<Permission> permissionSet = new HashSet<>();
+
+            Role role = new Role("普通用户","普通用户");
+            permissionSet.add(new Permission(1L));
+            permissionSet.add(new Permission(2L));
+            permissionSet.add(new Permission(3L));
+            permissionSet.add(new Permission(4L));
+            permissionSet.add(new Permission(5L));
+            role.setPermissionSet(permissionSet);
+            roleRepository.save(role);
+            permissionSet.clear();
+
+            role = new Role("VIP用户","VIP用户");
+            permissionSet.add(new Permission(1L));
+            permissionSet.add(new Permission(2L));
+            permissionSet.add(new Permission(3L));
+            permissionSet.add(new Permission(4L));
+            permissionSet.add(new Permission(5L));
+            permissionSet.add(new Permission(9L));
+            role.setPermissionSet(permissionSet);
+            roleRepository.save(role);
+            permissionSet.clear();
+
+            role = new Role("管理员","管理");
+            permissionSet.add(new Permission(1L));
+            permissionSet.add(new Permission(6L));
+            permissionSet.add(new Permission(7L));
+            role.setPermissionSet(permissionSet);
+            roleRepository.save(role);
+            permissionSet.clear();
+
+            role = new Role("超级管理员","超级管理");
+            permissionSet.add(new Permission(1L));
+            permissionSet.add(new Permission(6L));
+            permissionSet.add(new Permission(7L));
+            permissionSet.add(new Permission(8L));
+            role.setPermissionSet(permissionSet);
+            roleRepository.save(role);
+            permissionSet.clear();
+
+
+            return CommonResult.success("数据导入Es成功");
+        } catch (Exception e) {
+            return CommonResult.failed(e.getMessage());
+        }
+    }
+
 }

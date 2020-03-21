@@ -31,4 +31,6 @@ public interface UserService {
     String refreshToken(String token);
 
     UserDetailsImpl loadUserByUsername(String username);
+
+    User putUserRole(Long user_id, Long role_id);
 }

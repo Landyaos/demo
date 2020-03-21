@@ -17,7 +17,9 @@ public interface GenreService {
 
     Genre getGenreById(Integer id);
 
-    Genre add(GenreParam genreParam);
+    Genre getGenreByName(String name);
+
+    Genre addGenre(GenreParam genreParam);
 
     Genre updateGenre(GenreParam genreParam);
 }

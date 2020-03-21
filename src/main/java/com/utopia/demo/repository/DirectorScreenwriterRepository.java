@@ -7,4 +7,6 @@ public interface DirectorScreenwriterRepository extends JpaRepository<DirectorSc
 
     DirectorScreenwriter findById(long id);
 
+    DirectorScreenwriter findByName(String name);
+
 }

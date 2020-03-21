@@ -4,6 +4,8 @@ import com.utopia.demo.entity.*;
 import com.utopia.demo.entity.view.*;
 import com.utopia.demo.repository.*;
 import com.utopia.demo.repository.migration.*;
+import com.utopia.demo.service.PermissionService;
+import com.utopia.demo.service.RoleService;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +14,15 @@ import org.springframework.data.redis.connection.ReactiveListCommands;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootTest
 public class JpaTest {
 
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private PermissionService permissionService;
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
@@ -54,8 +57,13 @@ public class JpaTest {
     private GenreMigrationRepository genreMigrationRepository;
     @Autowired
     private DirectorScreenwriterMigrationRepository directorScreenwriterMigrationRepository;
+    @Autowired
+    private PermissionRepository permissionRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Test
+
     public void viewTest() {
 
         List<UserMigration> userMigrationList = userMigrationRepository.findAll();
@@ -196,4 +204,74 @@ public class JpaTest {
 
 
     }
+
+
+    @Test
+    public void permissionTest() {
+        List<Permission> permissionList = new ArrayList<>();
+        permissionList.add(new Permission("用户权限", "涉及用户资源相关的", "/movie"));
+        permissionList.add(new Permission("电影资源访问权限", "涉及电影资源访问权限", "/movie"));
+        permissionList.add(new Permission("演员资源访问权限", "涉及演员资源访问权限", "/starring"));
+        permissionList.add(new Permission("导编资源访问权限", "涉及导编资源访问权限", "/directorScreenwriter"));
+        permissionList.add(new Permission("类型资源访问权限", "涉及类型资源访问权限", "/genre"));
+        permissionList.add(new Permission("管理权限", "涉及管理权限", "/admin"));
+        permissionList.add(new Permission("登录权限", "涉及登录权限", "/login"));
+        permissionList.add(new Permission("Elasticsearch权限", "涉及Elasticsearch权限", "/es"));
+        permissionList.add(new Permission("VIP权限", "涉及VIP权限", "/vip"));
+        for (Permission permission : permissionList) {
+            permissionRepository.save(permission);
+        }
+    }
+
+    @Test
+    public void roleTest() {
+        Set<Permission> permissionSet = new HashSet<>();
+
+        Role role = new Role("普通用户", "普通用户");
+        permissionSet.add(new Permission(1L));
+        permissionSet.add(new Permission(2L));
+        permissionSet.add(new Permission(3L));
+        permissionSet.add(new Permission(4L));
+        permissionSet.add(new Permission(5L));
+        role.setPermissionSet(permissionSet);
+        roleRepository.save(role);
+        permissionSet.clear();
+
+        role = new Role("VIP用户", "VIP用户");
+        permissionSet.add(new Permission(1L));
+        permissionSet.add(new Permission(2L));
+        permissionSet.add(new Permission(3L));
+        permissionSet.add(new Permission(4L));
+        permissionSet.add(new Permission(5L));
+        permissionSet.add(new Permission(9L));
+        role.setPermissionSet(permissionSet);
+        roleRepository.save(role);
+        permissionSet.clear();
+
+        role = new Role("管理员", "管理");
+        permissionSet.add(new Permission(1L));
+        permissionSet.add(new Permission(6L));
+        permissionSet.add(new Permission(7L));
+        role.setPermissionSet(permissionSet);
+        roleRepository.save(role);
+        permissionSet.clear();
+
+        role = new Role("超级管理员", "超级管理");
+        permissionSet.add(new Permission(1L));
+        permissionSet.add(new Permission(6L));
+        permissionSet.add(new Permission(7L));
+        permissionSet.add(new Permission(8L));
+        role.setPermissionSet(permissionSet);
+        roleRepository.save(role);
+        permissionSet.clear();
+
+    }
+
+    @Test
+    public void controllerTest() {
+        System.out.println(permissionService.getPermissionById(1L));
+
+    }
+
+
 }

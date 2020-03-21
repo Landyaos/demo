@@ -7,15 +7,17 @@ import org.springframework.data.domain.Page;
 import java.util.Map;
 
 public interface DirectorScreenwriterService {
-    Page<DirectorScreenwriter> getAll(Integer pageNum, Integer pageSize);
+    Page<DirectorScreenwriter> getAllDirectorScreenwriter(Integer pageNum, Integer pageSize);
 
     Page<DirectorScreenwriter> getBySearch(Map<String, Object> query, Integer pageNum, Integer pageSize);
 
-    DirectorScreenwriter getById(Integer id);
+    DirectorScreenwriter getOneById(Integer id);
 
-    DirectorScreenwriter add(DirectorScreenwriterParam directorScreenwriterParam);
+    DirectorScreenwriter getOneByName(String name);
 
-    DirectorScreenwriter update(DirectorScreenwriterParam directorScreenwriterParam);
+    DirectorScreenwriter addDirectorScreenwriter(DirectorScreenwriterParam directorScreenwriterParam);
 
-    boolean deleteById(long id);
+    DirectorScreenwriter updateDirectorScreenwriter(DirectorScreenwriterParam directorScreenwriterParam);
+
+    boolean deleteOneById(long id);
 }

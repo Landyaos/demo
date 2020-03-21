@@ -16,7 +16,7 @@ public class Permission extends AbstractEntity {
     private String name;
 
     @Column
-    private  String description;
+    private String description;
 
     @Column
     private String resource;
@@ -30,6 +30,16 @@ public class Permission extends AbstractEntity {
     private Set<Role> roleSet;
 
     public Permission() {
+    }
+
+    public Permission(Long id) {
+        super.setId(id);
+    }
+
+    public Permission(String name, String description, String resource) {
+        this.name = name;
+        this.description = description;
+        this.resource = resource;
     }
 
     @Override
@@ -68,6 +78,7 @@ public class Permission extends AbstractEntity {
     public Set<Role> getRoleSet() {
         return roleSet;
     }
+
     @JsonBackReference
     public void setRoleSet(Set<Role> roleSet) {
         this.roleSet = roleSet;
