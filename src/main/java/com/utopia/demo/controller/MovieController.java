@@ -1,7 +1,6 @@
 package com.utopia.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.util.ObjectBuffer;
 import com.utopia.demo.common.CommonResult;
 import com.utopia.demo.dto.MovieParam;
 import com.utopia.demo.entity.Movie;
@@ -62,7 +61,8 @@ public class MovieController {
 
     @ApiOperation(value = "增加电影", httpMethod = "POST", response = CommonResult.class)
     @PostMapping(value = "/movie")
-    public CommonResult addMovie(@RequestBody MovieParam movieParam) {
+    public CommonResult addMovie(@RequestBody JSONObject jsonObject) {
+        MovieParam movieParam = JSONObject.toJavaObject(jsonObject, MovieParam.class);
         Movie movie = movieService.putToSql(movieParam);
         if (movie == null) {
             return CommonResult.failed("电影已存在");
@@ -85,9 +85,13 @@ public class MovieController {
     @PutMapping(value = "/movie/{id}")
     public CommonResult putMovieDetail(
             @PathVariable(value = "id") long id,
-            @RequestBody MovieParam movieParam) {
-        System.out.println(movieParam);
-        return CommonResult.success(movieParam, "电影信息更新成功.");
+            @RequestBody JSONObject jsonObject) {
+        MovieParam movieParam = JSONObject.toJavaObject(jsonObject, MovieParam.class);
+        if (movieService.updateByIdFromSql(movieParam) != null) {
+            return CommonResult.success(movieParam, "电影信息更新成功.");
+        } else {
+            return CommonResult.failed("电影信息更新失败");
+        }
     }
 
 

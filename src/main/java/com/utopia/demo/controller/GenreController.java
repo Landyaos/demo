@@ -72,9 +72,9 @@ public class GenreController {
             @PathVariable(value = "id") long id
     ) {
         if (genreService.deleteGenreById(id)) {
-            return CommonResult.success("删除用户成功");
+            return CommonResult.success("删除类型成功");
         }
-        return CommonResult.failed("删除用户失败");
+        return CommonResult.failed("删除类型失败");
     }
 
     @ApiOperation(value = "修改类型", httpMethod = "PUT", response = CommonResult.class)

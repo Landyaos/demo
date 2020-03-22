@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
+
 @Service
 public class GenreServiceImpl implements GenreService {
 
@@ -30,7 +32,13 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public boolean deleteGenreById(long id) {
-        return false;
+        try {
+            genreRepository.delete(new Genre(id));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     @Override
@@ -53,6 +61,14 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre updateGenre(GenreParam genreParam) {
-        return null;
+        try {
+            Genre genre = genreRepository.findById(genreParam.getId()).orElse(null);
+            BeanUtils.copyProperties(genreParam, genre);
+            genreRepository.save(genre);
+            return genre;
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 }

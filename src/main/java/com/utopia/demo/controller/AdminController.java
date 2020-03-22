@@ -92,7 +92,7 @@ public class AdminController {
         return CommonResult.success(userPage, "获取用户成功");
     }
 
-    @ApiOperation(value = "更改用户角色", httpMethod = "Put", response = CommonResult.class)
+    @ApiOperation(value = "更改用户角色", httpMethod = "PUT", response = CommonResult.class)
     @PutMapping(value = "/user/{user_id}/role/{role_id}")
     public CommonResult putUserRole(
             @PathVariable(value = "user_id") Long user_id,

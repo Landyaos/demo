@@ -59,7 +59,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public boolean deleteByIdFromSql(long id) {
-        return false;
+        try {
+            movieRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

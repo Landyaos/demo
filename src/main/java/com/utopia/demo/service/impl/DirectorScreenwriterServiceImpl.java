@@ -67,6 +67,11 @@ public class DirectorScreenwriterServiceImpl implements DirectorScreenwriterServ
 
     @Override
     public boolean deleteOneById(long id) {
-        return false;
+        try {
+            directorScreenwriterRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

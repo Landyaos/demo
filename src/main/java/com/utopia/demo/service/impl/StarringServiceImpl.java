@@ -52,7 +52,12 @@ public class StarringServiceImpl implements StarringService {
 
     @Override
     public boolean deleteById(long id) {
-        return false;
+        try {
+            starringRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
