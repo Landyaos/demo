@@ -3,6 +3,7 @@ package com.utopia.demo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.utopia.demo.common.CommonResult;
 import com.utopia.demo.dto.MovieParam;
+import com.utopia.demo.dto.SearchQueryParam;
 import com.utopia.demo.entity.Movie;
 import com.utopia.demo.service.MovieService;
 import io.swagger.annotations.Api;
@@ -172,16 +173,32 @@ public class MovieController {
 
 
     @ApiOperation(value = "es获取查询电影", httpMethod = "GET", response = CommonResult.class)
-    @GetMapping(value = "/movie/es/_search")
+    @PostMapping(value = "/movie/es/_search")
     public CommonResult getEsMovieSearch(
-            @RequestParam(value = "query", required = false) Map<String, String> query,
+            @RequestBody SearchQueryParam searchContent,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize
     ) {
         //Page<EsMovie> esMoviePage = movieService.getSearchEsMovie(pageNum, PageSize, query);
-        Map<String, Object> map = movieService.getSearchByPageFromEs(pageNum, pageSize, query);
+        Map<String, Object> map = movieService.getSearchByPageFromEs(pageNum, pageSize, searchContent);
         if ((int) map.get("status") == 200) {
             return CommonResult.success(map, "获取ES搜索成功");
+        } else {
+            return CommonResult.failed((String) map.get("errMsg"));
+        }
+    }
+
+    @ApiOperation(value = "es获取电影排行榜", httpMethod = "GET", response = CommonResult.class)
+    @GetMapping(value = "/movie/es/_rank")
+    public CommonResult getEsMovieRank(
+            @RequestParam(value = "sortKernel") String sortKernel,
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize
+    ) {
+        //Page<EsMovie> esMoviePage = movieService.getSearchEsMovie(pageNum, PageSize, query);
+        Map<String, Object> map = movieService.getRankByPageFromEs(pageNum, pageSize, sortKernel);
+        if ((int) map.get("status") == 200) {
+            return CommonResult.success(map, "获取ES排行榜成功");
         } else {
             return CommonResult.failed((String) map.get("errMsg"));
         }

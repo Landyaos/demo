@@ -2,6 +2,7 @@ package com.utopia.demo.service.impl;
 
 import com.utopia.demo.common.INDEX;
 import com.utopia.demo.dto.MovieParam;
+import com.utopia.demo.dto.SearchQueryParam;
 import com.utopia.demo.entity.Movie;
 import com.utopia.demo.nosql.elasticsearch.pojo.EsMovie;
 import com.utopia.demo.nosql.elasticsearch.repository.EsMovieRepository;
@@ -173,8 +174,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Map<String, Object> getSearchByPageFromEs(Integer pageNum, Integer pageSize, Map query) {
+    public Map<String, Object> getSearchByPageFromEs(Integer pageNum, Integer pageSize, SearchQueryParam searchQueryParam) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-        return elasticsearchService.findAll(INDEX.MOVIE.getIndex(), pageable, EsMovie.class);
+        return elasticsearchService.findByQuery(INDEX.MOVIE.getIndex(), searchQueryParam, pageable, EsMovie.class);
+    }
+
+    @Override
+    public Map<String, Object> getRankByPageFromEs(Integer pageNum, Integer pageSize, String sortKernel) {
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        return elasticsearchService.findByRank(INDEX.MOVIE.getIndex(), sortKernel, pageable, EsMovie.class);
     }
 }

@@ -1,10 +1,7 @@
 package com.utopia.demo.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import org.springframework.data.domain.Page;
+import com.utopia.demo.dto.SearchQueryParam;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -16,8 +13,9 @@ public interface ElasticsearchService {
 
    <T> Map<String, Object> findCommentReviewByMovieId(String index, Long movieId, Pageable pageable, Class<T> tClass);
 
-   <T> Map<String, Object> findByQuery(String index, Map query, Pageable pageable, Class<T> tClass);
+   <T> Map<String, Object> findByQuery(String index, SearchQueryParam searchQueryParam, Pageable pageable, Class<T> tClass);
 
+   <T> Map<String, Object> findByRank(String index, String sortKernel, Pageable pageable, Class<T> tClass);
 
 
 }

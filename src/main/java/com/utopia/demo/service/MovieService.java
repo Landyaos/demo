@@ -1,7 +1,7 @@
 package com.utopia.demo.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.utopia.demo.dto.MovieParam;
+import com.utopia.demo.dto.SearchQueryParam;
 import com.utopia.demo.entity.Movie;
 import com.utopia.demo.nosql.elasticsearch.pojo.EsMovie;
 import org.springframework.data.domain.Page;
@@ -57,5 +57,8 @@ public interface MovieService {
 
     Map<String, Object> getColdRecommendByPageFromEs(Long userId, Integer pageNum, Integer pageSize);
 
-    Map<String, Object> getSearchByPageFromEs(Integer pageNum, Integer pageSize, Map query);
+    Map<String, Object> getSearchByPageFromEs(Integer pageNum, Integer pageSize, SearchQueryParam searchQueryParam);
+
+    Map<String, Object> getRankByPageFromEs(Integer pageNum, Integer pageSize, String sortKernel);
+
 }
