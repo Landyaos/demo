@@ -44,6 +44,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
     //return new PageImpl<>(list, pageable, hits.getTotalHits().value);
 
     private <T> Map<String, Object> commonSearch(String index, SearchSourceBuilder searchSourceBuilder, Class<T> tClass) {
+
         Map<String, Object> map = new HashMap<>();
         //创建检索请求
         SearchRequest searchRequest = new SearchRequest(index);
@@ -105,6 +106,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
 
     @Override
     public <T> Map<String, Object> findByQuery(String index, SearchQueryParam searchQueryParam, Pageable pageable, Class<T> tClass) {
+
         /**
          * searchQueryParam : {
          *     content: String
